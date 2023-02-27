@@ -1,4 +1,4 @@
-export default (
+const NotFound = () => (
   <>
     <h3>Адрес не существует</h3>
     <div>
@@ -6,3 +6,5 @@ export default (
     </div>
   </>
 );
+
+export default NotFound;
