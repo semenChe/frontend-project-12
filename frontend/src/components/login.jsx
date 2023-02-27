@@ -9,8 +9,6 @@ import Row from 'react-bootstrap/Row';
 import FormBootstrap from 'react-bootstrap/Form';
 import { Nav } from 'react-bootstrap';
 
-import './Login.css';
-
 const Login = () => {
   const schema = yup.object().shape({
     username: yup.string().min(3, 'от 3 до 20 символов').max(20, 'от 3 до 20 символов').required('обязательное поле'),
