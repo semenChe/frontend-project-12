@@ -28,6 +28,7 @@ rules:
   import/no-unresolved: 0
   react/prop-types: 0
   no-console: 0
+  no-param-reassign: 0
   react/react-in-jsx-scope: 0
   functional/no-conditional-statement: 0
   functional/no-expression-statement: 0
