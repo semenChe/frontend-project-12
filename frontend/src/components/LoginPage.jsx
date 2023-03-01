@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -44,15 +44,15 @@ const LoginPage = () => {
     },
   });
 
-  const SignupSchema = Yup.object().shape({
-    username: Yup.string()
-      .min(2, 'Too Short!')
-      .required('Required'),
-    password: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
-  });
+  // const SignupSchema = Yup.object().shape({
+  //   username: Yup.string()
+  //     .min(2, 'Too Short!')
+  //     .required('Required'),
+  //   password: Yup.string()
+  //     .min(2, 'Too Short!')
+  //     .max(50, 'Too Long!')
+  //     .required('Required'),
+  // });
 
   return (
     <div className="container-fluid">
