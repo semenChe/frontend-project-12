@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import { Button, Navbar, Container } from 'react-bootstrap';
 
-import NotFound from './NotFound.jsx';
+import NotFound from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import ChatPage from './ChatPage.jsx';
 import AuthContext from '../contexts/index.jsx';
