@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
-// import * as Yup from 'yup';
-import { Button, Form } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+import {
+  Button, Form, Col, Container, Card, Row, FloatingLabel,
+} from 'react-bootstrap';
+import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 
 import useAuth from '../hooks/index.jsx';
 import routes from '../routes.js';
+import imagePath from '../assets/avatar.jpg';
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -23,6 +26,16 @@ const LoginPage = () => {
       username: '',
       password: '',
     },
+    validationSchema: Yup.object({
+      username: Yup.string()
+        .min(3, 'От 3 до 20 символов')
+        .max(20, 'От 3 до 20 символов')
+        .required('Обязательное поле'),
+      password: Yup.string()
+        .min(5, 'Не менее 5 символов')
+        .required('Обязательное поле'),
+    }),
+
     onSubmit: async (values) => {
       setAuthFailed(false);
 
@@ -44,55 +57,72 @@ const LoginPage = () => {
     },
   });
 
-  // const SignupSchema = Yup.object().shape({
-  //   username: Yup.string()
-  //     .min(2, 'Too Short!')
-  //     .required('Required'),
-  //   password: Yup.string()
-  //     .min(2, 'Too Short!')
-  //     .max(50, 'Too Long!')
-  //     .required('Required'),
-  // });
-
   return (
-    <div className="container-fluid">
-      <div className="row justify-content-center pt-5">
-        <div className="col-sm-4">
-          <Form onSubmit={formik.handleSubmit} className="p-3">
-            <fieldset disabled={formik.isSubmitting}>
-              <Form.Group>
-                <Form.Control
-                  onChange={formik.handleChange}
-                  value={formik.values.username}
-                  placeholder="Ваш ник"
-                  name="username"
-                  id="username"
-                  autoComplete="username"
-                  isInvalid={authFailed}
-                  required
-                  ref={inputRef}
+    <Container className="h-100" fluid>
+      <Row className="justify-content-center align-content-center h-100">
+        <Col className="col-12 col-md-8 col-xxl-6">
+          <Card className="shadow-sm">
+            <Card.Body className="p-5 row">
+              <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img
+                  src={imagePath}
+                  className="roundedCircle"
+                  alt="Log in page"
                 />
-              </Form.Group>
-              <Form.Group>
-                <Form.Control
-                  type="password"
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                  placeholder="Пароль"
-                  name="password"
-                  id="password"
-                  autoComplete="current-password"
-                  isInvalid={authFailed}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль</Form.Control.Feedback>
-              </Form.Group>
-              <Button type="submit" variant="outline-primary">Войти</Button>
-            </fieldset>
-          </Form>
-        </div>
-      </div>
-    </div>
+              </div>
+              <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
+                <h1 className="text-center mb-4">Войти</h1>
+                <fieldset disabled={formik.isSubmitting}>
+                  <Form.Group className="form-floating mb-3">
+                    <FloatingLabel controlId="floatingUsername" label="Ваш ник">
+                      <Form.Control
+                        type="text"
+                        onChange={formik.handleChange}
+                        value={formik.values.username}
+                        onBlur={formik.handleBlur}
+                        placeholder="username"
+                        name="username"
+                        id="username"
+                        autoComplete="username"
+                        isInvalid={authFailed}
+                        required
+                        ref={inputRef}
+                      />
+                    </FloatingLabel>
+                  </Form.Group>
+                  <Form.Group className="form-floating mb-3">
+                    <FloatingLabel controlId="floatingPassword" label="Пароль">
+                      <Form.Control
+                        type="password"
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                        onBlur={formik.handleBlur}
+                        placeholder="password"
+                        name="password"
+                        id="password"
+                        autoComplete="current-password"
+                        isInvalid={authFailed}
+                        required
+                      />
+
+                    </FloatingLabel>
+                    <Form.Control.Feedback type="invalid" className="invalid-feedback">Неверные имя пользователя или пароль</Form.Control.Feedback>
+                  </Form.Group>
+                  <Button type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
+                </fieldset>
+              </Form>
+            </Card.Body>
+            <Card.Footer className="p-4">
+              <div className="text-center">
+                <span>Нет аккаунта?</span>
+                {' '}
+                <NavLink to="/login">Регистрация</NavLink>
+              </div>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

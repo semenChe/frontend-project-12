@@ -31,7 +31,7 @@ rules:
   no-param-reassign: 0
   react/react-in-jsx-scope: 0
   functional/no-conditional-statement: 0
-  functional/no-expression-statement: 0
+  functional/no-expression-statements: 0
   functional/immutable-data: 0
   functional/functional-parameters: 0
   functional/no-try-statement: 0

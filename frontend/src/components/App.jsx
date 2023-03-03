@@ -25,6 +25,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
       {children}
     </AuthContext.Provider>
@@ -55,8 +56,8 @@ const App = () => (
       <Navbar bg="white" expand="lg" className="shadow-sm">
         <Container>
           <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+          <AuthButton />
         </Container>
-        <AuthButton />
       </Navbar>
       <div className="container p-3">
         <Routes>
