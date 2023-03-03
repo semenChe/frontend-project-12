@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
 
 import { actions } from '../slices/index.js';
-import ChannelsComponent from './componentsChat/channelsComponent.jsx';
-import MessagesComponent from './componentsChat/messagesComponent.jsx';
+import ChannelsComponent from './componentsChat/channelsComponent';
+import MessagesComponent from './componentsChat/messagesComponent';
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
