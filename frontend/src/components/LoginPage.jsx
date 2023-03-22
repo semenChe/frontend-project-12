@@ -6,12 +6,14 @@ import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import {
   Button, Form, Col, Container, Card, Row, FloatingLabel,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
 import imagePath from '../assets/avatar.jpg';
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
@@ -28,11 +30,11 @@ const LoginPage = () => {
     },
     validationSchema: Yup.object({
       username: Yup.string()
-        .typeError('Обязательное поле')
-        .required('Обязательное поле'),
+        .typeError(t('required'))
+        .required(t('required')),
       password: Yup.string()
-        .typeError('Обязательное поле')
-        .required('Обязательное поле'),
+        .typeError(t('required'))
+        .required(t('required')),
     }),
 
     onSubmit: async (values) => {
@@ -69,10 +71,10 @@ const LoginPage = () => {
                 />
               </div>
               <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">{t('enter')}</h1>
                 <fieldset disabled={formik.isSubmitting}>
                   <Form.Group className="form-floating mb-3">
-                    <FloatingLabel controlId="floatingUsername" label="Ваш ник">
+                    <FloatingLabel controlId="floatingUsername" label={t('username')}>
                       <Form.Control
                         type="text"
                         onChange={formik.handleChange}
@@ -89,7 +91,7 @@ const LoginPage = () => {
                     </FloatingLabel>
                   </Form.Group>
                   <Form.Group className="form-floating mb-3">
-                    <FloatingLabel controlId="floatingPassword" label="Пароль">
+                    <FloatingLabel controlId="floatingPassword" label={t('password')}>
                       <Form.Control
                         type="password"
                         onChange={formik.handleChange}
@@ -103,17 +105,17 @@ const LoginPage = () => {
                         required
                       />
                     </FloatingLabel>
-                    <Form.Control.Feedback type="invalid" className="invalid-feedback">Неверные имя пользователя или пароль</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid" className="invalid-feedback">{t('noValidUsername')}</Form.Control.Feedback>
                   </Form.Group>
-                  <Button type="submit" variant="outline-primary" className="w-100 mb-3">Войти</Button>
+                  <Button type="submit" variant="outline-primary" className="w-100 mb-3">{t('enter')}</Button>
                 </fieldset>
               </Form>
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>Нет аккаунта?</span>
+                <span>{t('notAccount')}</span>
                 {' '}
-                <NavLink to="/signup">Регистрация</NavLink>
+                <NavLink to="/signup">{t('signUp')}</NavLink>
               </div>
             </Card.Footer>
           </Card>

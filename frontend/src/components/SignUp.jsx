@@ -70,18 +70,16 @@ const SignUp = () => {
         const { from } = location.state || { from: { pathname: '/' } };
         navigate(from);
       } catch (err) {
-        // console.log('err.response.status ==>', err.response.status);
         if (err.response.status === 409) {
           setFailedRegistration(true);
           usernameRef.current.select();
           return;
         }
-        // console.log('проверка ошибки');
         throw err;
       }
     },
   });
-  // console.log('failedRegistration ==>', failedRegistration);
+
   return (
     <Container className="container-fluid h-100">
       <Row className="justify-content-center align-content-center h-100">
@@ -96,7 +94,7 @@ const SignUp = () => {
                 />
               </div>
               <Form className="w-50">
-                <h1 className="text-center mb-4">Регистрация</h1>
+                <h1 className="text-center mb-4">{t('signUp')}</h1>
                 <FormGroup className="form-floating mb-3">
                   <FormControl
                     id="username"

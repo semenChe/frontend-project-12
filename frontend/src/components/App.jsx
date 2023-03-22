@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 import { Button, Navbar, Container } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { socketContext, AuthContext } from '../context/index.jsx';
 import { actions } from '../slices/index.js';
@@ -75,9 +76,10 @@ const PrivateRoute = ({ children }) => {
 
 const AuthButton = () => {
   const auth = useAuth();
+  const { t } = useTranslation();
   return (
     auth.loggedIn
-      ? <Button onClick={auth.logOut}>Выйти</Button>
+      ? <Button onClick={auth.logOut}>{t('exitButton')}</Button>
       : null
   );
 };
@@ -85,6 +87,7 @@ const AuthButton = () => {
 const App = () => {
   const socket = io();
   const dispacth = useDispatch();
+  const { t } = useTranslation();
 
   socket.on('newMessage', (payload) => {
     dispacth(addMessage(payload));
@@ -96,7 +99,6 @@ const App = () => {
     dispacth(deleteChannel(payload.id));
   });
   socket.on('renameChannel', (payload) => {
-    console.log('payload in socked', payload);
     dispacth(channelRename(payload));
   });
 
@@ -142,7 +144,7 @@ const App = () => {
         <Router>
           <Navbar bg="white" expand="lg" className="shadow-sm">
             <Container>
-              <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+              <Navbar.Brand as={Link} to="/">{t('chatLogo')}</Navbar.Brand>
               <AuthButton />
             </Container>
           </Navbar>

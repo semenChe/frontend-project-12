@@ -24,8 +24,9 @@ const Add = ({ closeHandler }) => {
   const allChannels = useSelector((state) => state.channelsInfo.channels);
   const socketApi = useSocketApi();
   const channelsName = allChannels.map((channel) => channel.name);
-  // console.log('channelsName ===>', channelsName);
+
   const refContainer = useRef('');
+
   useEffect(() => {
     refContainer.current.focus();
   }, []);
@@ -52,7 +53,7 @@ const Add = ({ closeHandler }) => {
       }
     },
   });
-  // console.log('formik.errors===>', formik.errors.name);
+
   return (
     <Modal.Dialog>
       <Modal.Header closeButton={closeHandler}>

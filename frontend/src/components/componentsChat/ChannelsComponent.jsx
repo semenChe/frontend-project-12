@@ -22,7 +22,7 @@ const ChannelsComponent = () => {
   const handleClick = (id) => {
     dispatch(setActualChannel(id));
   };
-  // console.log('channelsInfo', channelsInfo);
+
   const { currentChannelId } = channelsInfo;
 
   return (
@@ -30,7 +30,7 @@ const ChannelsComponent = () => {
       <ChatModal />
       <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
         <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-          <span>Каналы</span>
+          <span>{t('channels')}</span>
           <Button
             variant="light"
             className="p-0 text-primary btn btn-group-vertical"
@@ -40,7 +40,7 @@ const ChannelsComponent = () => {
           </Button>
         </div>
         <Nav
-          defaultActiveKey="#general"
+          defaultActiveKey={t('general')}
           className="flex-column nav-pills nav-fill px-2"
           as="ul"
         >

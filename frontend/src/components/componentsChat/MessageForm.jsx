@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import leoProfanity from 'leo-profanity';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
+import { useTranslation } from 'react-i18next';
 
 import { useAuth, useSocketApi } from '../../hooks/index.jsx';
 
@@ -11,10 +12,12 @@ const MessageForm = ({ activeChannel }) => {
   const { user } = useAuth();
   const socketApi = useSocketApi();
   const messageRef = useRef(null);
+  const { t } = useTranslation();
+
   const validationSchema = yup.object().shape({
     message: yup.string().trim().required('Required'),
   });
-  // console.log('socketApi====>', socketApi); // ищем функцию добавления сообщения
+
   useEffect(() => {
     messageRef.current.focus();
   }, []);
@@ -30,7 +33,6 @@ const MessageForm = ({ activeChannel }) => {
         username: user.username,
       };
       try {
-        // console.log('сообщение ===>', message);
         await socketApi.sendMessage(message);
         values.body = '';
       } catch (e) {
@@ -50,8 +52,8 @@ const MessageForm = ({ activeChannel }) => {
           <Form.Control
             name="body"
             ref={messageRef}
-            aria-label="Новое сообщение"
-            placeholder="Введите сообщение..."
+            aria-label={t('newMessage')}
+            placeholder={t('messageFormPlaceholder')}
             className="border-0 p-0 ps-2"
             value={formik.values.body}
             onChange={formik.handleChange}

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
-// import leoProfanity from 'leo-profanity';
+import leoProfanity from 'leo-profanity';
 
 import { useSocketApi } from '../../hooks/index.jsx';
 
@@ -35,8 +35,6 @@ const Rename = ({ closeHandler, changed }) => {
   const channelsName = allChannels.map((channel) => channel.name);
   const channel = allChannels.find(({ id }) => id === changed);
 
-  // console.log('channelsName ===>', channelsName);
-
   const formik = useFormik({
     initialValues: {
       name: channel.name,
@@ -44,9 +42,14 @@ const Rename = ({ closeHandler, changed }) => {
     validationSchema: validationChannelsSchema(channelsName, t),
     onSubmit: (values) => {
       const { name } = values;
-      socketApi.renameChannel({ name, id: changed });
-      notify();
-      closeHandler();
+      const cleanedName = leoProfanity.clean(name);
+      try {
+        socketApi.renameChannel({ name: cleanedName, id: changed });
+        notify();
+        closeHandler();
+      } catch (e) {
+        console.error(e.message);
+      }
     },
   });
   return (
@@ -82,7 +85,7 @@ const Rename = ({ closeHandler, changed }) => {
         <FormControl
           className="btn btn-primary"
           type="submit"
-          value={t('modals.sendButton')}
+          value={t('modals.rename')}
           onClick={formik.handleSubmit}
         />
       </Modal.Footer>
