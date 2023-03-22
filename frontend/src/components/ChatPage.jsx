@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { actions } from '../slices/index.js';
-import ChannelsComponent from './componentsChat/channelsComponent.jsx';
+import ChannelsComponent from './componentsChat/channelsComponent';
 import MessagesComponent from './componentsChat/messagesComponent.jsx';
 
 const getAuthHeader = () => {
