@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { actions } from '../slices/index.js';
-import ChannelsComponent from './componentsChat/channelsComponent';
-import MessagesComponent from './componentsChat/messagesComponent.jsx';
+import ChannelsComponent from './componentsChat/ChannelsComponent.jsx';
+import MessagesComponent from './componentsChat/MessagesComponent.jsx';
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
