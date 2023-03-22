@@ -113,7 +113,7 @@ const LoginPage = () => {
               <div className="text-center">
                 <span>Нет аккаунта?</span>
                 {' '}
-                <NavLink to="/login">Регистрация</NavLink>
+                <NavLink to="/signup">Регистрация</NavLink>
               </div>
             </Card.Footer>
           </Card>

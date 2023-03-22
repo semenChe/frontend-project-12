@@ -8,7 +8,7 @@ import MessagesComponent from './componentsChat/messagesComponent.jsx';
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem('userId'));
-
+  // console.log('userId && userId.token ==>', userId, userId.token);
   if (userId && userId.token) {
     return { Authorization: `Bearer ${userId.token}` };
   }
@@ -24,6 +24,7 @@ const ChatPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const authHeader = await getAuthHeader();
+      // console.log('authHeader =!=>', authHeader);
       dispatch(actions.fetchData(authHeader))
         .unwrap()
         .catch(({ status }) => {

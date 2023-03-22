@@ -16,6 +16,7 @@ import { actions } from '../slices/index.js';
 import NotFound from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import ChatPage from './ChatPage.jsx';
+import SignUp from './SignUp.jsx';
 import { useAuth } from '../hooks/index.jsx';
 
 const {
@@ -156,6 +157,7 @@ const App = () => {
             )}
               />
               <Route path="login" element={<LoginPage />} />
+              <Route path="signup" element={<SignUp />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

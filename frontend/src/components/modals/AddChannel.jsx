@@ -70,7 +70,7 @@ const Add = ({ closeHandler }) => {
               value={formik.values.name}
               isInvalid={!!formik.errors.name}
             />
-            <FormControl.Feedback type="invalid">
+            <FormControl.Feedback type="invalid" className="invalid-feedback">
               {formik.errors.name}
             </FormControl.Feedback>
           </FormGroup>
