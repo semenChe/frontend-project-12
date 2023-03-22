@@ -14,6 +14,7 @@ import { Button, Navbar, Container } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
+import { Provider } from '@rollbar/react';
 
 import { socketContext, AuthContext } from '../context/index.jsx';
 import { actions } from '../slices/index.js';
@@ -31,6 +32,11 @@ const {
   deleteChannel,
   channelRename,
 } = actions;
+
+const rollbarrConfig = {
+  accessToken: process.env.ROLLBAR_TOKEN,
+  environment: 'production',
+};
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -142,45 +148,47 @@ const App = () => {
   );
 
   return (
-    <socketContext.Provider value={socketApi}>
-      <AuthProvider>
-        <div className="d-flex flex-column h-100">
-          <Router>
-            <Navbar bg="white" expand="lg" className="shadow-sm">
-              <Container>
-                <Navbar.Brand as={Link} to="/">{t('chatLogo')}</Navbar.Brand>
-                <AuthButton />
-              </Container>
-            </Navbar>
-            <Routes>
-              <Route
-                path="/"
-                element={(
-                  <PrivateRoute>
-                    <ChatPage />
-                  </PrivateRoute>
+    <Provider config={rollbarrConfig}>
+      <socketContext.Provider value={socketApi}>
+        <AuthProvider>
+          <div className="d-flex flex-column h-100">
+            <Router>
+              <Navbar bg="white" expand="lg" className="shadow-sm">
+                <Container>
+                  <Navbar.Brand as={Link} to="/">{t('chatLogo')}</Navbar.Brand>
+                  <AuthButton />
+                </Container>
+              </Navbar>
+              <Routes>
+                <Route
+                  path="/"
+                  element={(
+                    <PrivateRoute>
+                      <ChatPage />
+                    </PrivateRoute>
             )}
+                />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="signup" element={<SignUp />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
               />
-              <Route path="login" element={<LoginPage />} />
-              <Route path="signup" element={<SignUp />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </Router>
-        </div>
-      </AuthProvider>
-    </socketContext.Provider>
+            </Router>
+          </div>
+        </AuthProvider>
+      </socketContext.Provider>
+    </Provider>
   );
 };
 
