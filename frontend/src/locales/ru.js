@@ -24,7 +24,7 @@ const ruLocales = {
     loading: 'Загрузка...',
     exitButton: 'Выйти',
     channels: 'Каналы',
-    general: '#general',
+    general: '# general',
     remove: 'Удалить',
     rename: 'Переименовать',
     messages_one: '{{count}} сообщение',

@@ -19,11 +19,11 @@ const getAuthHeader = () => {
 const ChatPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const notify = () => toast.error(t('toast.dataLoadingError'));
 
   const channelsInfo = useSelector((s) => s.channelsInfo);
 
   useEffect(() => {
+    const notify = () => toast.error(t('toast.dataLoadingError'));
     const fetchData = async () => {
       const authHeader = await getAuthHeader();
       dispatch(actions.fetchData(authHeader))
@@ -33,12 +33,17 @@ const ChatPage = () => {
           console.error(status);
         });
     };
-
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, t]);
 
   if (channelsInfo.loading) {
-    return <h1>{t('loading')}</h1>;
+    return (
+      <Container className="h-100 my-4 overflow-hidden rounded shadow">
+        <div className="row h-100 bg-white flex-md-row">
+          <h1>{t('loading')}</h1>
+        </div>
+      </Container>
+    );
   }
   return (
     <Container className="h-100 my-4 overflow-hidden rounded shadow">

@@ -18,6 +18,7 @@ const ChatModal = () => {
   };
 
   const ActyalModal = modalsWindow(type);
+
   return (
     <Modal show={isOpened} onHide={closeHandler} centered>
       {ActyalModal && (
