@@ -1,4 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { io } from 'socket.io-client';
 import {
   BrowserRouter as Router,
@@ -11,6 +13,7 @@ import {
 import { Button, Navbar, Container } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer } from 'react-toastify';
 
 import { socketContext, AuthContext } from '../context/index.jsx';
 import { actions } from '../slices/index.js';
@@ -141,14 +144,14 @@ const App = () => {
   return (
     <socketContext.Provider value={socketApi}>
       <AuthProvider>
-        <Router>
-          <Navbar bg="white" expand="lg" className="shadow-sm">
-            <Container>
-              <Navbar.Brand as={Link} to="/">{t('chatLogo')}</Navbar.Brand>
-              <AuthButton />
-            </Container>
-          </Navbar>
-          <div className="container p-3">
+        <div className="d-flex flex-column h-100">
+          <Router>
+            <Navbar bg="white" expand="lg" className="shadow-sm">
+              <Container>
+                <Navbar.Brand as={Link} to="/">{t('chatLogo')}</Navbar.Brand>
+                <AuthButton />
+              </Container>
+            </Navbar>
             <Routes>
               <Route
                 path="/"
@@ -162,8 +165,20 @@ const App = () => {
               <Route path="signup" element={<SignUp />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </div>
-        </Router>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+          </Router>
+        </div>
       </AuthProvider>
     </socketContext.Provider>
   );

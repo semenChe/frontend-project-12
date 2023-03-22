@@ -11,7 +11,7 @@ const { setActualChannel } = actions;
 
 const Remove = ({ closeHandler, changed }) => {
   const { t } = useTranslation();
-  const notify = () => toast(t('toast.removeChannel'));
+  const notify = () => toast.warn(t('toast.removeChannel'));
   const currentChannelId = useSelector(
     (state) => state.channelsInfo.currentChannelId,
   );

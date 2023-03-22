@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import { actions } from '../slices/index.js';
 import ChannelsComponent from './componentsChat/channelsComponent.jsx';
@@ -12,13 +13,13 @@ const getAuthHeader = () => {
   if (userId && userId.token) {
     return { Authorization: `Bearer ${userId.token}` };
   }
-
   return {};
 };
 
 const ChatPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const notify = () => toast.error(t('toast.dataLoadingError'));
 
   const channelsInfo = useSelector((s) => s.channelsInfo);
 
@@ -28,6 +29,7 @@ const ChatPage = () => {
       dispatch(actions.fetchData(authHeader))
         .unwrap()
         .catch(({ status }) => {
+          notify();
           console.error(status);
         });
     };

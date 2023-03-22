@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import leoProfanity from 'leo-profanity';
 import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 import { useSocketApi } from '../../hooks/index.jsx';
 
@@ -30,6 +30,7 @@ const Add = ({ closeHandler }) => {
   useEffect(() => {
     refContainer.current.focus();
   }, []);
+
   const notify = () => toast.success(t('toast.createChannel'));
 
   const close = () => {

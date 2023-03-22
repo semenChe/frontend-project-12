@@ -14,6 +14,7 @@ const ruLocales = {
       createChannel: 'Канал создан',
       removeChannel: 'Канал удален',
       renamedChannel: 'Канал переименован',
+      dataLoadingError: 'Ошибка загрузки данных',
     },
     required: 'Обязательное поле',
     min: 'Минимальная длина 3 символа',

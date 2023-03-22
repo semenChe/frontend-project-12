@@ -7,7 +7,6 @@ const fetchData = createAsyncThunk(
   'channelsInfo/setInitialState',
   async (authHeader, { rejectWithValue }) => {
     try {
-      // console.log('authHeader ===>', authHeader);
       const response = await axios.get(getRoutes.dataPath(), { headers: authHeader });
       return response.data;
     } catch (err) {

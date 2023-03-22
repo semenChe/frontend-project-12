@@ -2,10 +2,10 @@ import React, { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Modal, FormGroup, FormControl } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import leoProfanity from 'leo-profanity';
+import { toast } from 'react-toastify';
 
 import { useSocketApi } from '../../hooks/index.jsx';
 
@@ -21,7 +21,7 @@ const validationChannelsSchema = (channels, text) => yup.object().shape({
 
 const Rename = ({ closeHandler, changed }) => {
   const { t } = useTranslation();
-  const notify = () => toast(t('toast.renamedChannel'));
+  const notify = () => toast.info(t('toast.renamedChannel'));
   const refContainer = useRef('');
   useEffect(() => {
     setTimeout(() => {
