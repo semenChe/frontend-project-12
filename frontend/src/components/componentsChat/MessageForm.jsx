@@ -5,13 +5,16 @@ import leoProfanity from 'leo-profanity';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 
-// import useAuth from '../../hooks/index.jsx';
+import { useAuth, useSocketApi } from '../../hooks/index.jsx';
 
 const MessageForm = ({ activeChannel }) => {
+  const { user } = useAuth();
+  const socketApi = useSocketApi();
   const messageRef = useRef(null);
   const validationSchema = yup.object().shape({
     message: yup.string().trim().required('Required'),
   });
+  // console.log('socketApi====>', socketApi); // ищем функцию добавления сообщения
   useEffect(() => {
     messageRef.current.focus();
   }, []);
@@ -24,13 +27,14 @@ const MessageForm = ({ activeChannel }) => {
       const message = {
         text: cleanedMessage,
         channelId: activeChannel.id,
-        username: 'user.username', // нужно найти имя
+        username: user.username,
       };
       try {
-        console.log(message);
+        // console.log('сообщение ===>', message);
+        await socketApi.sendMessage(message);
         values.body = '';
       } catch (e) {
-        console.log(e.message);
+        console.error(e.message);
       }
     },
     validateOnChange: validationSchema,

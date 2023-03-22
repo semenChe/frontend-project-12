@@ -5,6 +5,7 @@
   "proxy": "http://localhost:5001",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
+    "@rollbar/react": "^0.11.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

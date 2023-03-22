@@ -19,7 +19,25 @@ const slice = createSlice({
   name: 'channelsInfo',
   initialState: { loading: false, channels: [], currentChannelId: null },
   reducers: {
-    // reducers
+    setChannels(state, { payload }) {
+      state.channels = payload;
+    },
+    setActualChannel(state, { payload }) {
+      state.currentChannelId = payload;
+    },
+    addChannel(state, { payload }) {
+      state.channels.push(payload);
+    },
+    deleteChannel(state, { payload }) {
+      state.channels = state.channels.filter(
+        (channel) => channel.id !== payload,
+      );
+    },
+    channelRename(state, { payload }) {
+      const { id, name } = payload;
+      const channel = state.channels.find((chann) => chann.id === id);
+      channel.name = name;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -37,9 +55,8 @@ const slice = createSlice({
   },
 });
 
-const actions = {
+export const actions = {
   ...slice.actions,
   fetchData,
 };
-export { actions };
 export default slice.reducer;

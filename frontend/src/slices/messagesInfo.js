@@ -6,7 +6,17 @@ const slice = createSlice({
   name: 'messagesInfo',
   initialState: { messages: [] },
   reducers: {
-    // reducers
+    setMessages(state, { payload }) {
+      state.messages = payload;
+    },
+    addMessage(state, { payload }) {
+      state.messages.push(payload);
+    },
+    removeMessage(state, { payload }) {
+      state.messages = state.messages.filter(
+        (message) => message.channelId !== payload,
+      );
+    },
   },
   extraReducers: (builder) => {
     builder

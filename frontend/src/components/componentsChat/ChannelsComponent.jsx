@@ -1,47 +1,98 @@
-import { Button, Nav } from 'react-bootstrap';
+import {
+  Button, Nav, ButtonGroup, Dropdown,
+} from 'react-bootstrap';
 import { BsPlusSquare } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
+import { actions } from '../../slices/index.js';
+import ChatModal from '../Modal.jsx';
 
 const ChannelsComponent = () => {
   const channelsInfo = useSelector((s) => s.channelsInfo);
-  // console.log('channelsInfo:', channelsInfo);
+  const { setActualChannel, openWindow } = actions;
 
-  const openAddChannelWindow = () => {};
-  const handleClick = (id) => { console.log(id); };
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
 
+  const openAddChannelWindow = () => {
+    dispatch(openWindow({ type: 'addChannel' }));
+  };
+
+  const handleClick = (id) => {
+    dispatch(setActualChannel(id));
+  };
+  // console.log('channelsInfo', channelsInfo);
   const { currentChannelId } = channelsInfo;
 
   return (
-    <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
-      <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-        <span>Каналы</span>
-        <Button
-          variant="light"
-          className="p-0 text-primary btn btn-group-vertical"
-          onClick={openAddChannelWindow}
+    <>
+      <ChatModal />
+      <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
+        <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
+          <span>Каналы</span>
+          <Button
+            variant="light"
+            className="p-0 text-primary btn btn-group-vertical"
+            onClick={openAddChannelWindow}
+          >
+            <BsPlusSquare />
+          </Button>
+        </div>
+        <Nav
+          defaultActiveKey="#general"
+          className="flex-column nav-pills nav-fill px-2"
+          as="ul"
         >
-          <BsPlusSquare />
-        </Button>
+          {channelsInfo.channels.map((channel) => {
+            const { id, name } = channel;
+            const openRemoveChannelWindow = () => {
+              dispatch(openWindow({ type: 'removing', id }));
+            };
+            const openRenameChannelWindow = () => {
+              dispatch(openWindow({ type: 'renaming', id }));
+            };
+            if (!channel.removable) {
+              return (
+                <Nav.Item key={id} className="w-100" as="li">
+                  <Button
+                    variant={id === currentChannelId ? 'secondary' : 'light'}
+                    className="w-100 rounded-0 text-start"
+                    onClick={() => handleClick(id)}
+                  >
+                    <span className="me-1">#</span>
+                    {name}
+                  </Button>
+                </Nav.Item>
+              );
+            }
+            return (
+              <Nav.Item key={id} className="w-100" as="li">
+                <Dropdown className="d-flex btn-group" as={ButtonGroup}>
+                  <Button
+                    variant={id === currentChannelId ? 'secondary' : 'light'}
+                    className="w-100 rounded-0 text-start"
+                    onClick={() => handleClick(id)}
+                  >
+                    <span className="me-1">#</span>
+                    {name}
+                  </Button>
+                  <Dropdown.Toggle variant={id === currentChannelId ? 'secondary' : 'light'} />
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={(e) => openRemoveChannelWindow(e)}>
+                      {t('remove')}
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => openRenameChannelWindow(e)}>
+                      {t('rename')}
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Nav.Item>
+            );
+          })}
+        </Nav>
       </div>
-      <Nav
-        defaultActiveKey="#general"
-        className="flex-column nav-pills nav-fill px-2"
-        as="ul"
-      >
-        {channelsInfo.channels.map((channel) => (
-          <Nav.Item key={channel.id} className="w-100" as="li">
-            <Button
-              variant={channel.id === currentChannelId ? 'secondary' : 'light'}
-              className="w-100 rounded-0 text-start"
-              onClick={() => handleClick(channel.id)}
-            >
-              <span className="me-1">#</span>
-              {channel.name}
-            </Button>
-          </Nav.Item>
-        ))}
-      </Nav>
-    </div>
+    </>
   );
 };
 

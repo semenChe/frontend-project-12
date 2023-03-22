@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/semenChe/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.6",
-    "react-icons": "^4.7.1"
+    "@hexlet/chat-server": "^1.1.6"
   }
 }

@@ -2,12 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import {
   Button, Form, Col, Container, Card, Row, FloatingLabel,
 } from 'react-bootstrap';
-import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
 import imagePath from '../assets/avatar.jpg';
 
@@ -28,21 +28,19 @@ const LoginPage = () => {
     },
     validationSchema: Yup.object({
       username: Yup.string()
-        .min(3, 'От 3 до 20 символов')
-        .max(20, 'От 3 до 20 символов')
+        .typeError('Обязательное поле')
         .required('Обязательное поле'),
       password: Yup.string()
-        .min(5, 'Не менее 5 символов')
+        .typeError('Обязательное поле')
         .required('Обязательное поле'),
     }),
 
     onSubmit: async (values) => {
       setAuthFailed(false);
-
       try {
         const res = await axios.post(routes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(res.data));
-        auth.logIn();
+        auth.logIn(res.data);
         const { from } = location.state || { from: { pathname: '/' } };
         navigate(from);
       } catch (err) {
@@ -104,7 +102,6 @@ const LoginPage = () => {
                         isInvalid={authFailed}
                         required
                       />
-
                     </FloatingLabel>
                     <Form.Control.Feedback type="invalid" className="invalid-feedback">Неверные имя пользователя или пароль</Form.Control.Feedback>
                   </Form.Group>

@@ -1,13 +1,13 @@
+import { Provider } from 'react-redux';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
 import App from './components/App.jsx';
 import resources from './locales/index.js';
 import reducer from './slices/index.js';
 
-const init = async () => {
+const Init = async () => {
   const i18n = i18next.createInstance();
 
   await i18n
@@ -30,4 +30,4 @@ const init = async () => {
   );
 };
 
-export default init;
+export default Init;
