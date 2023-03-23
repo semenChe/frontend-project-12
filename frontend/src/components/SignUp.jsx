@@ -143,7 +143,7 @@ const SignUp = () => {
                 </FormGroup>
                 <FormGroup className="form-floating mb-3">
                   <FormControl
-                    type="confirmPassword"
+                    type="password"
                     id="confirmPassword"
                     name="confirmPassword"
                     placeholder={t('signUpPage.minPasswordLenght')}
@@ -156,7 +156,7 @@ const SignUp = () => {
                       || failedRegistration
                     }
                   />
-                  <FormLabel>{t('signUpPage.repeatPassword')}</FormLabel>
+                  <FormLabel htmlFor="confirmPassword">{t('signUpPage.repeatPassword')}</FormLabel>
                   <Form.Control.Feedback
                     type="invalid"
                     className="invalid-feedback"
