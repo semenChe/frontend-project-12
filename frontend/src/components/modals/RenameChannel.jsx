@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import {
-  Modal, FormGroup, FormControl, FormLabel,
+  Modal, FormGroup, FormControl, FormLabel, Button,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -79,18 +79,8 @@ const Rename = ({ closeHandler, changed }) => {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <FormControl
-          className="btn btn-primary"
-          type="submit"
-          value={t('modals.cancelButton')}
-          onClick={closeHandler}
-        />
-        <FormControl
-          className="btn btn-primary"
-          type="submit"
-          value={t('modals.rename')}
-          onClick={formik.handleSubmit}
-        />
+        <Button variant="secondary" type="button" onClick={closeHandler}>{t('modals.cancelButton')}</Button>
+        <Button variant="primary" type="submit" onClick={formik.handleSubmit}>{t('modals.rename')}</Button>
       </Modal.Footer>
     </Modal.Dialog>
   );

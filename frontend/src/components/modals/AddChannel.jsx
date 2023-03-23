@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import leoProfanity from 'leo-profanity';
 import {
-  Modal, FormGroup, FormControl, FormLabel,
+  Modal, FormGroup, FormControl, FormLabel, Button,
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
@@ -82,18 +82,8 @@ const Add = ({ closeHandler }) => {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <FormControl
-          className="me-2 btn btn-secondary"
-          type="button"
-          value={t('modals.cancelButton')}
-          onClick={closeHandler}
-        />
-        <FormControl
-          className="btn btn-primary"
-          type="submit"
-          value={t('modals.addButton')}
-          onClick={formik.handleSubmit}
-        />
+        <Button variant="secondary" type="button" onClick={closeHandler}>{t('modals.cancelButton')}</Button>
+        <Button variant="primary" type="submit" onClick={formik.handleSubmit}>{t('modals.addButton')}</Button>
       </Modal.Footer>
     </Modal.Dialog>
   );
