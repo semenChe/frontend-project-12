@@ -65,18 +65,17 @@ const Add = ({ closeHandler }) => {
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
           <FormGroup>
-            <FormLabel controlId="name" className="visually-hidden" label={t('modals.nameChannel')}>
-              <FormControl
-                data-testid="input-body"
-                ref={refContainer}
-                name="name"
-                required=""
-                onChange={formik.handleChange}
-                value={formik.values.name}
-                isInvalid={!!formik.errors.name}
-              />
-            </FormLabel>
-            <FormControl.Feedback type="invalid" className="invalid-feedback">
+            <FormControl
+              data-testid="input-body"
+              ref={refContainer}
+              name="name"
+              required=""
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              isInvalid={!!formik.errors.name}
+            />
+            <FormLabel controlId="name" className="visually-hidden">{t('modals.nameChannel')}</FormLabel>
+            <FormControl.Feedback type="invalid">
               {formik.errors.name}
             </FormControl.Feedback>
           </FormGroup>
