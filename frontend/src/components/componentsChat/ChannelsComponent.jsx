@@ -37,6 +37,7 @@ const ChannelsComponent = () => {
             onClick={openAddChannelWindow}
           >
             <BsPlusSquare />
+            <span className="visually-hidden">+</span>
           </Button>
         </div>
         <Nav
