@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, FormGroup } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -33,22 +33,10 @@ const Remove = ({ closeHandler, changed }) => {
       </Modal.Header>
       <Modal.Body>
         <p className="lead">{t('modals.questionInModal')}</p>
-        <form>
-          <FormGroup>
-            <input
-              type="button"
-              className="btn btn-secondary"
-              value={t('modals.cancelButton')}
-              onClick={closeHandler}
-            />
-            <input
-              type="button"
-              className="btn btn-danger"
-              value={t('modals.removeButton')}
-              onClick={deleteChannel}
-            />
-          </FormGroup>
-        </form>
+        <Modal.Footer>
+          <Button variant="secondary" className="me-2" type="button" onClick={closeHandler}>{t('modals.cancelButton')}</Button>
+          <Button variant="danger" type="button" onClick={deleteChannel}>{t('modals.removeButton')}</Button>
+        </Modal.Footer>
       </Modal.Body>
     </Modal.Dialog>
   );
