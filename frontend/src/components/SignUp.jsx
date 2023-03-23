@@ -143,7 +143,7 @@ const SignUp = () => {
                 </FormGroup>
                 <FormGroup className="form-floating mb-3">
                   <FormControl
-                    type="password"
+                    type="confirmPassword"
                     id="confirmPassword"
                     name="confirmPassword"
                     placeholder={t('signUpPage.minPasswordLenght')}
