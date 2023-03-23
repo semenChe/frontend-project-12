@@ -74,7 +74,7 @@ const LoginPage = () => {
                 <h1 className="text-center mb-4">{t('enter')}</h1>
                 <fieldset disabled={formik.isSubmitting}>
                   <Form.Group className="form-floating mb-3">
-                    <FloatingLabel controlId="floatingUsername" label={t('username')}>
+                    <FloatingLabel controlId="username" label={t('username')}>
                       <Form.Control
                         type="text"
                         onChange={formik.handleChange}
