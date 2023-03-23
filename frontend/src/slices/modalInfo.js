@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -16,7 +17,7 @@ const slice = createSlice({
       state.type = type;
       state.changed = id ?? null;
     },
-    closeModal: (state, { payload }) => {
+    closeModal: (state) => {
       state.isOpened = false;
       state.type = null;
       state.changed = null;
