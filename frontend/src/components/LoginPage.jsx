@@ -91,7 +91,7 @@ const LoginPage = () => {
                     </FloatingLabel>
                   </Form.Group>
                   <Form.Group className="form-floating mb-3">
-                    <FloatingLabel controlId="floatingPassword" label={t('password')}>
+                    <FloatingLabel controlId="password" label={t('password')}>
                       <Form.Control
                         type="password"
                         onChange={formik.handleChange}
