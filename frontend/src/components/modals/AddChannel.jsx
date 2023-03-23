@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import leoProfanity from 'leo-profanity';
 import {
-  Modal, FormGroup, FormControl, FormLabel, Button,
+  Modal, FormGroup, FormControl, FormLabel, Button, Form,
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
@@ -63,11 +63,12 @@ const Add = ({ closeHandler }) => {
         <Modal.Title>{t('modals.addChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={formik.handleSubmit}>
+        <Form onSubmit={formik.handleSubmit}>
           <FormGroup>
             <FormControl
-              data-testid="input-body"
+              className="mb-2"
               ref={refContainer}
+              id="name"
               name="name"
               required=""
               onChange={formik.handleChange}
@@ -78,13 +79,13 @@ const Add = ({ closeHandler }) => {
             <FormControl.Feedback type="invalid">
               {formik.errors.name}
             </FormControl.Feedback>
+            <Modal.Footer>
+              <Button variant="secondary" type="button" onClick={closeHandler}>{t('modals.cancelButton')}</Button>
+              <Button variant="primary" type="submit" onClick={formik.handleSubmit}>{t('modals.addButton')}</Button>
+            </Modal.Footer>
           </FormGroup>
-        </form>
+        </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" type="button" onClick={closeHandler}>{t('modals.cancelButton')}</Button>
-        <Button variant="primary" type="submit" onClick={formik.handleSubmit}>{t('modals.addButton')}</Button>
-      </Modal.Footer>
     </Modal.Dialog>
   );
 };
