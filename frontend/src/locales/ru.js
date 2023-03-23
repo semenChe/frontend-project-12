@@ -1,6 +1,7 @@
 const ruLocales = {
   translation: {
     modals: {
+      channelControl: 'Управление каналом',
       nameChannel: 'Имя канала',
       addChannel: 'Добавить канал',
       cancelButton: 'Отменить',
