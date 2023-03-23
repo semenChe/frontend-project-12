@@ -43,3 +43,18 @@ const Remove = ({ closeHandler, changed }) => {
 };
 
 export default Remove;
+
+// return (
+//   <Modal.Dialog className="modal-dialog-centered">
+//     <Modal.Header closeButton>
+//       <Modal.Title>{t('modals.removeChannel')}</Modal.Title>
+//     </Modal.Header>
+//     <Modal.Body>
+//       <p className="lead">{t('modals.questionInModal')}</p>
+//       <Modal.Footer>
+//         <Button variant="secondary" className="me-2" type="button" onClick={closeHandler}>{t('modals.cancelButton')}</Button>
+//         <Button variant="danger" type="button" onClick={deleteChannel}>{t('modals.removeButton')}</Button>
+//       </Modal.Footer>
+//     </Modal.Body>
+//   </Modal.Dialog>
+// );
