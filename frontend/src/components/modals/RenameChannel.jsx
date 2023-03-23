@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
-import { Modal, FormGroup, FormControl } from 'react-bootstrap';
+import {
+  Modal, FormGroup, FormControl, FormLabel,
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
@@ -60,15 +62,17 @@ const Rename = ({ closeHandler, changed }) => {
       <Modal.Body>
         <form onSubmit={formik.handleSubmit}>
           <FormGroup>
-            <FormControl
-              data-testid="input-body"
-              ref={refContainer}
-              name="name"
-              required=""
-              onChange={formik.handleChange}
-              value={formik.values.name}
-              isInvalid={!!formik.errors.name}
-            />
+            <FormLabel controlId="name" className="visually-hidden" label={t('modals.nameChannel')}>
+              <FormControl
+                data-testid="input-body"
+                ref={refContainer}
+                name="name"
+                required=""
+                onChange={formik.handleChange}
+                value={formik.values.name}
+                isInvalid={!!formik.errors.name}
+              />
+            </FormLabel>
             <FormControl.Feedback type="invalid">
               {formik.errors.name}
             </FormControl.Feedback>
