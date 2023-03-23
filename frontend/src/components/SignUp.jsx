@@ -165,6 +165,7 @@ const SignUp = () => {
                   </Form.Control.Feedback>
                 </FormGroup>
                 <Button
+                  type="submit"
                   className="w-100"
                   variant="outline-primary"
                   onClick={formik.handleSubmit}
