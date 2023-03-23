@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+import getRoutes from '../routes.js';
 import imagePath from '../assets/notFound.jpg';
 
 const NotFound = () => {
@@ -12,7 +13,7 @@ const NotFound = () => {
       <p className="text-muted">
         {t('youCanGo')}
         {' '}
-        <a href="/">{t('toHomePage')}</a>
+        <a href={getRoutes.chatPagePath()}>{t('toHomePage')}</a>
       </p>
     </div>
   );

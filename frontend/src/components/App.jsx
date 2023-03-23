@@ -23,6 +23,7 @@ import LoginPage from './LoginPage.jsx';
 import ChatPage from './ChatPage.jsx';
 import SignUp from './SignUp.jsx';
 import { useAuth } from '../hooks/index.jsx';
+import getRoutes from '../routes.js';
 
 const {
   addMessage,
@@ -160,21 +161,21 @@ const App = () => {
               <Router>
                 <Navbar bg="white" expand="lg" className="shadow-sm">
                   <Container>
-                    <Navbar.Brand as={Link} to="/">{t('chatLogo')}</Navbar.Brand>
+                    <Navbar.Brand as={Link} to={getRoutes.chatPagePath()}>{t('chatLogo')}</Navbar.Brand>
                     <AuthButton />
                   </Container>
                 </Navbar>
                 <Routes>
                   <Route
-                    path="/"
+                    path={getRoutes.chatPagePath()}
                     element={(
                       <PrivateRoute>
                         <ChatPage />
                       </PrivateRoute>
             )}
                   />
-                  <Route path="login" element={<LoginPage />} />
-                  <Route path="signup" element={<SignUp />} />
+                  <Route path={getRoutes.loginPagePath()} element={<LoginPage />} />
+                  <Route path={getRoutes.signupPagePath()} element={<SignUp />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
                 <ToastContainer
