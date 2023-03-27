@@ -9,7 +9,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from '../hooks/index.jsx';
-import routes from '../routes.js';
+import getRoutes from '../routes.js';
 import imagePath from '../assets/avatar.jpg';
 
 const LoginPage = () => {
@@ -40,7 +40,7 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       setAuthFailed(false);
       try {
-        const res = await axios.post(routes.loginPath(), values);
+        const res = await axios.post(getRoutes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(res.data));
         auth.logIn(res.data);
         const { from } = location.state || { from: { pathname: '/' } };
@@ -115,7 +115,7 @@ const LoginPage = () => {
               <div className="text-center">
                 <span>{t('notAccount')}</span>
                 {' '}
-                <NavLink to="/signup">{t('signUp')}</NavLink>
+                <NavLink to={getRoutes.signupPagePath()}>{t('signUp')}</NavLink>
               </div>
             </Card.Footer>
           </Card>
