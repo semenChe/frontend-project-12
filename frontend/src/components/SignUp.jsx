@@ -22,6 +22,7 @@ import { useAuth } from '../hooks/index.jsx';
 
 const SignUp = () => {
   const [failedRegistration, setFailedRegistration] = useState(false);
+  const [submited, setSubmited] = useState(false);
   const { t } = useTranslation();
   const usernameRef = useRef(null);
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ const SignUp = () => {
     validationSchema: registrationValidation,
     onSubmit: async (values) => {
       setFailedRegistration(false);
+      setSubmited(true);
       try {
         const { username, password } = values;
         const { data } = await axios.post(getRoutes.signupPath(), { username, password });
@@ -77,6 +79,7 @@ const SignUp = () => {
         }
         throw err;
       }
+      setSubmited(false);
     },
   });
 
@@ -104,6 +107,7 @@ const SignUp = () => {
                     value={formik.values.username}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
+                    disabled={submited}
                     isInvalid={
                       (formik.errors.username && formik.touched.username)
                       || failedRegistration
@@ -128,6 +132,7 @@ const SignUp = () => {
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
+                    disabled={submited}
                     isInvalid={
                       (formik.errors.password && formik.touched.password)
                       || failedRegistration
@@ -150,6 +155,7 @@ const SignUp = () => {
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
+                    disabled={submited}
                     isInvalid={
                       (formik.errors.confirmPassword
                         && formik.touched.confirmPassword)
@@ -166,6 +172,7 @@ const SignUp = () => {
                 </FormGroup>
                 <Button
                   type="submit"
+                  disabled={submited}
                   className="w-100"
                   variant="outline-primary"
                   onClick={formik.handleSubmit}

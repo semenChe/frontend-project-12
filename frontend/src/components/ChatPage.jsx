@@ -5,28 +5,22 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { actions } from '../slices/index.js';
+import { useAuth } from '../hooks/index.jsx';
 import ChannelsComponent from './componentsChat/ChannelsComponent.jsx';
 import MessagesComponent from './componentsChat/MessagesComponent.jsx';
-
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-  if (userId && userId.token) {
-    return { Authorization: `Bearer ${userId.token}` };
-  }
-  return {};
-};
 
 const ChatPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const auth = useAuth();
 
   const channelsInfo = useSelector((s) => s.channelsInfo);
 
   useEffect(() => {
     const notify = () => toast.error(t('toast.dataLoadingError'));
+
     const fetchData = async () => {
-      const authHeader = await getAuthHeader();
-      dispatch(actions.fetchData(authHeader))
+      dispatch(actions.fetchData(auth.header()))
         .unwrap()
         .catch(({ status }) => {
           notify();
@@ -34,7 +28,7 @@ const ChatPage = () => {
         });
     };
     fetchData();
-  }, [dispatch, t]);
+  }, [dispatch, auth, t]);
 
   if (channelsInfo.loading) {
     return (

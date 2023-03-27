@@ -42,6 +42,7 @@ const MessageForm = ({ activeChannel }) => {
     },
     validateOnChange: validationSchema,
   });
+
   return (
     <div className="mt-auto px-3 py-3">
       <Form
@@ -62,7 +63,7 @@ const MessageForm = ({ activeChannel }) => {
           />
           <Button
             variant="group-vertical"
-            disabled={formik.isSubmitting}
+            disabled={formik.isSubmitting || !formik.values.body}
             onClick={formik.handleSubmit}
           >
             <ArrowRightSquare size={20} />

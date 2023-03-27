@@ -3,13 +3,12 @@ import i18next from 'i18next';
 import { io } from 'socket.io-client';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
-import { configureStore } from '@reduxjs/toolkit';
 
 import AuthProvider from './context/AuthProvider.jsx';
 import { socketContext } from './context/contex.js';
 import App from './components/App.jsx';
 import resources from './locales/index.js';
-import reducer, { actions } from './slices/index.js';
+import store, { actions } from './slices/index.js';
 
 const {
   addMessage,
@@ -21,11 +20,7 @@ const {
 } = actions;
 
 const Init = async () => {
-  const store = configureStore({
-    reducer,
-  });
-
-  const { dispacth } = store;
+  const dispacth = store.dispatch;
 
   const socket = io();
   socket.on('newMessage', (payload) => {
@@ -38,10 +33,10 @@ const Init = async () => {
     dispacth(deleteChannel(payload.id));
   });
   socket.on('renameChannel', (payload) => {
-    console.log('payload in socked', payload);
     dispacth(channelRename(payload));
   });
 
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const socketApi = {
     sendMessage: (...args) => socket.emit('newMessage', ...args),
     newChannel: (name, cb) => {

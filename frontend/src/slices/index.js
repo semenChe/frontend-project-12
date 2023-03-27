@@ -1,4 +1,4 @@
-import { combineReducers } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import channelsInfo, { actions as channelsInfoActions } from './channelsInfo.js';
 import messagesInfo, { actions as messagesInfoActions } from './messagesInfo.js';
@@ -14,8 +14,12 @@ export {
   actions,
 };
 
-export default combineReducers({
+const reducer = combineReducers({
   channelsInfo,
   messagesInfo,
   modalInfo,
+});
+
+export default configureStore({
+  reducer,
 });
