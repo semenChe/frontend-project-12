@@ -44,7 +44,7 @@ const MessageForm = ({ activeChannel }) => {
   });
 
   return (
-    <div className="mt-auto px-3 py-3">
+    <div className="mt-auto px-5 py-3">
       <Form
         noValidate
         className="py-1 border rounded-2"
@@ -62,11 +62,14 @@ const MessageForm = ({ activeChannel }) => {
             id="body"
           />
           <Button
+            style={{ border: 'none' }}
             variant="group-vertical"
+            type="submit"
             disabled={formik.isSubmitting || !formik.values.body}
             onClick={formik.handleSubmit}
           >
             <ArrowRightSquare size={20} />
+            <span className="visually-hidden">{t('send')}</span>
           </Button>
         </Form.Group>
       </Form>

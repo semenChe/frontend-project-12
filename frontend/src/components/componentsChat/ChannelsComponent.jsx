@@ -10,13 +10,13 @@ import ChatModal from '../Modal.jsx';
 
 const ChannelsComponent = () => {
   const channelsInfo = useSelector((s) => s.channelsInfo);
-  const { setActualChannel, openWindow } = actions;
+  const { setActualChannel, openModal } = actions;
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const openAddChannelWindow = () => {
-    dispatch(openWindow({ type: 'addChannel' }));
+    dispatch(openModal({ type: 'addChannel' }));
   };
 
   const handleClick = (id) => {
@@ -28,12 +28,12 @@ const ChannelsComponent = () => {
   return (
     <>
       <ChatModal />
-      <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
-        <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
-          <span>{t('channels')}</span>
+      <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+        <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
+          <b>{t('channels')}</b>
           <Button
-            variant="light"
-            className="p-0 text-primary btn btn-group-vertical"
+            variant="group-vertical"
+            className="p-0 text-primary"
             onClick={openAddChannelWindow}
           >
             <BsPlusSquare />
@@ -42,16 +42,16 @@ const ChannelsComponent = () => {
         </div>
         <Nav
           defaultActiveKey={t('general')}
-          className="flex-column nav-pills nav-fill px-2"
+          className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
           as="ul"
         >
           {channelsInfo.channels.map((channel) => {
             const { id, name } = channel;
             const openRemoveChannelWindow = () => {
-              dispatch(openWindow({ type: 'removing', id }));
+              dispatch(openModal({ type: 'removing', id }));
             };
             const openRenameChannelWindow = () => {
-              dispatch(openWindow({ type: 'renaming', id }));
+              dispatch(openModal({ type: 'renaming', id }));
             };
             if (!channel.removable) {
               return (
@@ -72,22 +72,18 @@ const ChannelsComponent = () => {
                 <Dropdown className="d-flex btn-group" as={ButtonGroup}>
                   <Button
                     variant={id === currentChannelId ? 'secondary' : 'light'}
-                    className="w-100 rounded-0 text-start"
+                    className="w-100 rounded-0 text-start text-truncate"
                     onClick={() => handleClick(id)}
                   >
                     <span className="me-1">#</span>
                     {name}
                   </Button>
-                  <Dropdown.Toggle variant={id === currentChannelId ? 'secondary' : 'light'}>
+                  <Dropdown.Toggle variant={id === currentChannelId ? 'secondary' : 'light'} className="flex-grow-0 dropdown-toggle-split">
                     <span className="visually-hidden">{t('channelControl')}</span>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={(e) => openRemoveChannelWindow(e)}>
-                      {t('remove')}
-                    </Dropdown.Item>
-                    <Dropdown.Item onClick={(e) => openRenameChannelWindow(e)}>
-                      {t('rename')}
-                    </Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => openRemoveChannelWindow(e)}>{t('remove')}</Dropdown.Item>
+                    <Dropdown.Item onClick={(e) => openRenameChannelWindow(e)}>{t('rename')}</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </Nav.Item>

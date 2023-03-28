@@ -61,40 +61,42 @@ const App = () => {
   return (
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
-        <div className="d-flex flex-column h-100">
-          <Router>
-            <Navbar bg="white" expand="lg" className="shadow-sm">
-              <Container>
-                <Navbar.Brand as={Link} to={getRoutes.chatPagePath()}>{t('chatLogo')}</Navbar.Brand>
-                <AuthButton />
-              </Container>
-            </Navbar>
-            <Routes>
-              <Route
-                path={getRoutes.chatPagePath()}
-                element={(
-                  <PrivateRoute>
-                    <ChatPage />
-                  </PrivateRoute>
+        <div className="h-100">
+          <div className="d-flex flex-column h-100">
+            <Router>
+              <Navbar bg="white" expand="lg" className="shadow-sm">
+                <Container>
+                  <Navbar.Brand as={Link} to={getRoutes.chatPagePath()}>{t('chatLogo')}</Navbar.Brand>
+                  <AuthButton />
+                </Container>
+              </Navbar>
+              <Routes>
+                <Route
+                  path={getRoutes.chatPagePath()}
+                  element={(
+                    <PrivateRoute>
+                      <ChatPage />
+                    </PrivateRoute>
             )}
-              />
-              <Route path={getRoutes.loginPagePath()} element={<LoginPage />} />
-              <Route path={getRoutes.signupPagePath()} element={<SignUp />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </Router>
+                />
+                <Route path={getRoutes.loginPagePath()} element={<LoginPage />} />
+                <Route path={getRoutes.signupPagePath()} element={<SignUp />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Router>
+          </div>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </div>
       </ErrorBoundary>
     </Provider>

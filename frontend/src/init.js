@@ -5,7 +5,7 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
 
 import AuthProvider from './context/AuthProvider.jsx';
-import { socketContext } from './context/contex.js';
+import { chatApiContext } from './context/contex.js';
 import App from './components/App.jsx';
 import resources from './locales/index.js';
 import store, { actions } from './slices/index.js';
@@ -81,9 +81,9 @@ const Init = async () => {
     <Provider store={store}>
       <AuthProvider>
         <I18nextProvider i18n={i18n}>
-          <socketContext.Provider value={socketApi}>
+          <chatApiContext.Provider value={socketApi}>
             <App />
-          </socketContext.Provider>
+          </chatApiContext.Provider>
         </I18nextProvider>
       </AuthProvider>
     </Provider>

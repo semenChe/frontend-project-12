@@ -31,8 +31,8 @@ const MessagesComponent = () => {
           {activeChannelMessages.map((message) => (
             <Message message={message} key={message.id} />
           ))}
-          <MessageForm activeChannel={activeChannel} />
         </div>
+        <MessageForm activeChannel={activeChannel} />
       </div>
     </div>
   );

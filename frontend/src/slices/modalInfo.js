@@ -11,7 +11,7 @@ const slice = createSlice({
   name: 'modals',
   initialState,
   reducers: {
-    openWindow: (state, { payload }) => {
+    openModal: (state, { payload }) => {
       const { type, id } = payload;
       state.isOpened = true;
       state.type = type;
