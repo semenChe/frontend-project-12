@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import MessageForm from './MessageForm.jsx';
@@ -20,6 +21,12 @@ const MessagesComponent = () => {
     (message) => message.channelId === currentChannelId,
   );
 
+  const messagesView = useRef(null);
+
+  useEffect(() => {
+    messagesView.current?.lastElementChild?.scrollIntoView({ behavior: 'smooth' });
+  }, [activeChannelMessages]);
+
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -27,7 +34,7 @@ const MessagesComponent = () => {
           activeChannel={activeChannel}
           messagesCount={activeChannelMessages.length}
         />
-        <div id="messages-box" className="chat-messages overflow-auto px-5">
+        <div ref={messagesView} id="messages-box" className="chat-messages overflow-auto px-5">
           {activeChannelMessages.map((message) => (
             <Message message={message} key={message.id} />
           ))}

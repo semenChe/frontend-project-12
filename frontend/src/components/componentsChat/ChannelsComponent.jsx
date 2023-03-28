@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from 'react';
 import {
   Button, Nav, ButtonGroup, Dropdown,
 } from 'react-bootstrap';
@@ -25,6 +26,12 @@ const ChannelsComponent = () => {
 
   const { currentChannelId } = channelsInfo;
 
+  const channelsView = useRef(null);
+
+  useEffect(() => {
+    channelsView.current?.lastElementChild?.scrollIntoView({ behavior: 'smooth' });
+  }, [channelsInfo.channels.length]);
+
   return (
     <>
       <ChatModal />
@@ -44,6 +51,7 @@ const ChannelsComponent = () => {
           defaultActiveKey={t('general')}
           className="flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
           as="ul"
+          ref={channelsView}
         >
           {channelsInfo.channels.map((channel) => {
             const { id, name } = channel;

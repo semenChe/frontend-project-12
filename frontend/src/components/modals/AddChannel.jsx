@@ -59,7 +59,7 @@ const Add = ({ closeHandler }) => {
   });
 
   return (
-    <Modal.Dialog>
+    <>
       <Modal.Header closeButton={closeHandler}>
         <Modal.Title>{t('modals.addChannel')}</Modal.Title>
       </Modal.Header>
@@ -87,7 +87,7 @@ const Add = ({ closeHandler }) => {
           </FormGroup>
         </Form>
       </Modal.Body>
-    </Modal.Dialog>
+    </>
   );
 };
 

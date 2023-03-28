@@ -55,7 +55,7 @@ const Rename = ({ closeHandler, changed }) => {
     },
   });
   return (
-    <Modal.Dialog>
+    <>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.renameChannel')}</Modal.Title>
       </Modal.Header>
@@ -83,7 +83,7 @@ const Rename = ({ closeHandler, changed }) => {
           </FormGroup>
         </Form>
       </Modal.Body>
-    </Modal.Dialog>
+    </>
   );
 };
 
