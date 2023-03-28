@@ -15,16 +15,18 @@ const fetchData = createAsyncThunk(
     }
   },
 );
-
+const defaultCurrentChannelId = 1;
 const slice = createSlice({
   name: 'channelsInfo',
-  initialState: { loading: false, channels: [], currentChannelId: null },
+  initialState: { loading: false, channels: [], currentChannelId: defaultCurrentChannelId },
   reducers: {
     setChannels(state, { payload }) {
       state.channels = payload;
+      console.log('state.channels ==>', state.channels);
     },
     setActualChannel(state, { payload }) {
       state.currentChannelId = payload;
+      console.log(payload);
     },
     addChannel(state, { payload }) {
       state.channels.push(payload);
@@ -33,6 +35,9 @@ const slice = createSlice({
       state.channels = state.channels.filter(
         (channel) => channel.id !== payload,
       );
+      if (state.currentChannelId === payload) {
+        state.currentChannelId = defaultCurrentChannelId;
+      }
     },
     channelRename(state, { payload }) {
       const { id, name } = payload;

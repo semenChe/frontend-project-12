@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(false);
   }, []);
 
-  const header = () => {
+  const getAuthHeader = () => {
     const userId = JSON.parse(localStorage.getItem('userId'));
     if (userId && userId.token) {
       return { Authorization: `Bearer ${userId.token}` };
@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
       loggedIn,
       logIn,
       logOut,
-      header,
+      getAuthHeader,
       user,
     }),
     [loggedIn, logIn, logOut, user],

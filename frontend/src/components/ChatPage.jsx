@@ -20,7 +20,7 @@ const ChatPage = () => {
     const notify = () => toast.error(t('toast.dataLoadingError'));
 
     const fetchData = async () => {
-      dispatch(actions.fetchData(auth.header()))
+      dispatch(actions.fetchData(auth.getAuthHeader()))
         .unwrap()
         .catch(({ status }) => {
           notify();
