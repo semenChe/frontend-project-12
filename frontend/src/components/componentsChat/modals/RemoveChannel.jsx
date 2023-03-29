@@ -4,7 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { useSocketApi } from '../../hooks/index.jsx';
+import { useSocketApi } from '../../../hooks/hooks.js';
 
 const Remove = ({ closeHandler, changed }) => {
   const { t } = useTranslation();

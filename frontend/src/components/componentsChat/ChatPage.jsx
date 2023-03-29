@@ -4,10 +4,10 @@ import { Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { actions } from '../slices/index.js';
-import { useAuth } from '../hooks/index.jsx';
-import ChannelsComponent from './componentsChat/ChannelsComponent.jsx';
-import MessagesComponent from './componentsChat/MessagesComponent.jsx';
+import fetchData from '../../requests/fetchData.js';
+import { useAuth } from '../../hooks/hooks.js';
+import ChannelsComponent from './channels/ChannelsComponent.jsx';
+import MessagesComponent from './messages/MessagesComponent.jsx';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
@@ -19,15 +19,15 @@ const ChatPage = () => {
   useEffect(() => {
     const notify = () => toast.error(t('toast.dataLoadingError'));
 
-    const fetchData = async () => {
-      dispatch(actions.fetchData(auth.getAuthHeader()))
+    const fetchUserData = async () => {
+      dispatch(fetchData(auth.getAuthHeader()))
         .unwrap()
         .catch(({ status }) => {
           notify();
           console.error(status);
         });
     };
-    fetchData();
+    fetchUserData();
   }, [dispatch, auth, t]);
 
   if (channelsInfo.loading) {

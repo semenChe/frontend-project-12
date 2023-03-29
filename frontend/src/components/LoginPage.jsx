@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-import { useAuth } from '../hooks/index.jsx';
+import { useAuth } from '../hooks/hooks.js';
 import getRoutes from '../routes.js';
 import imagePath from '../assets/avatar.jpg';
 

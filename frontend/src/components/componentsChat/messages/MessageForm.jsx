@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useTranslation } from 'react-i18next';
 
-import { useAuth, useSocketApi } from '../../hooks/index.jsx';
+import { useAuth, useSocketApi } from '../../../hooks/hooks.js';
 
 const MessageForm = ({ activeChannel }) => {
   const { user } = useAuth();

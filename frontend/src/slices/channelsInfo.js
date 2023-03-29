@@ -1,32 +1,15 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
 
-import getRoutes from '../routes.js';
+import fetchData from '../requests/fetchData.js';
 
-const fetchData = createAsyncThunk(
-  'channelsInfo/setInitialState',
-  async (authHeader, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(getRoutes.dataPath(), { headers: authHeader });
-      return response.data;
-    } catch (err) {
-      return rejectWithValue({ message: err.message, status: err.status });
-    }
-  },
-);
 const defaultCurrentChannelId = 1;
 const slice = createSlice({
   name: 'channelsInfo',
   initialState: { loading: false, channels: [], currentChannelId: defaultCurrentChannelId },
   reducers: {
-    setChannels(state, { payload }) {
-      state.channels = payload;
-      console.log('state.channels ==>', state.channels);
-    },
     setActualChannel(state, { payload }) {
       state.currentChannelId = payload;
-      console.log(payload);
     },
     addChannel(state, { payload }) {
       state.channels.push(payload);
@@ -61,8 +44,5 @@ const slice = createSlice({
   },
 });
 
-export const actions = {
-  ...slice.actions,
-  fetchData,
-};
+export const { actions } = slice;
 export default slice.reducer;

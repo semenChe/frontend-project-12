@@ -1,105 +1,47 @@
 import 'react-toastify/dist/ReactToastify.css';
 
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  useLocation,
-} from 'react-router-dom';
-import { Button, Navbar, Container } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { Provider, ErrorBoundary } from '@rollbar/react';
 
 import NotFound from './NotFoundPage.jsx';
 import LoginPage from './LoginPage.jsx';
-import ChatPage from './ChatPage.jsx';
-import SignUp from './SignUp.jsx';
-import { useAuth } from '../hooks/index.jsx';
+import SignUp from './SignUpPage.jsx';
 import getRoutes from '../routes.js';
+import Header from './Header.jsx';
+import PrivateRoute from './PrivatePage.jsx';
 
-const rollbarConfig = {
-  accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
-  payload: {
-    environment: 'production',
-  },
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-};
-
-const PrivateRoute = ({ children }) => {
-  const auth = useAuth();
-  const location = useLocation();
-
-  return (
-    auth.loggedIn ? children : (
-      <Navigate
-        to={getRoutes.loginPagePath()}
-        state={{ from: location }}
-      />
-    )
-  );
-};
-
-const AuthButton = () => {
-  const auth = useAuth();
-  const { t } = useTranslation();
-  return (
-    auth.loggedIn
-      ? <Button onClick={auth.logOut}>{t('exitButton')}</Button>
-      : null
-  );
-};
-
-const App = () => {
-  const { t } = useTranslation();
-
-  return (
-    <Provider config={rollbarConfig}>
-      <ErrorBoundary>
-        <div className="h-100">
-          <div className="d-flex flex-column h-100">
-            <Router>
-              <Navbar bg="white" expand="lg" className="shadow-sm">
-                <Container>
-                  <Navbar.Brand as={Link} to={getRoutes.chatPagePath()}>{t('chatLogo')}</Navbar.Brand>
-                  <AuthButton />
-                </Container>
-              </Navbar>
-              <Routes>
-                <Route
-                  path={getRoutes.chatPagePath()}
-                  element={(
-                    <PrivateRoute>
-                      <ChatPage />
-                    </PrivateRoute>
+const App = () => (
+  <div className="h-100">
+    <div className="d-flex flex-column h-100">
+      <Router>
+        <Header />
+        <Routes>
+          <Route
+            path={getRoutes.chatPagePath()}
+            element={(
+              <PrivateRoute />
             )}
-                />
-                <Route path={getRoutes.loginPagePath()} element={<LoginPage />} />
-                <Route path={getRoutes.signupPagePath()} element={<SignUp />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Router>
-          </div>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
           />
-        </div>
-      </ErrorBoundary>
-    </Provider>
-  );
-};
+          <Route path={getRoutes.loginPagePath()} element={<LoginPage />} />
+          <Route path={getRoutes.signupPagePath()} element={<SignUp />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </div>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
+  </div>
+);
 
 export default App;

@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { useSocketApi } from '../../hooks/index.jsx';
+import { useSocketApi } from '../../../hooks/hooks.js';
 
 const validationChannelsSchema = (channels, text) => yup.object().shape({
   name: yup

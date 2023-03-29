@@ -1,8 +1,8 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import modalsWindow from './modals/index.js';
-import { actions } from '../slices/index.js';
+import modalsWindow from './index.js';
+import { actions } from '../../../slices/index.js';
 
 const { closeModal } = actions;
 

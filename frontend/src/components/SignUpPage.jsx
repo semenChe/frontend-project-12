@@ -18,7 +18,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import ImageSignUp from '../assets/avatar_1.jpg';
 import getRoutes from '../routes.js';
-import { useAuth } from '../hooks/index.jsx';
+import { useAuth } from '../hooks/hooks.js';
 
 const SignUp = () => {
   const [failedRegistration, setFailedRegistration] = useState(false);

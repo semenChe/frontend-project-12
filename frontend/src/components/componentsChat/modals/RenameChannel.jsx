@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import leoProfanity from 'leo-profanity';
 import { toast } from 'react-toastify';
 
-import { useSocketApi } from '../../hooks/index.jsx';
+import { useSocketApi } from '../../../hooks/hooks.js';
 
 const validationChannelsSchema = (channels, text) => yup.object().shape({
   name: yup
