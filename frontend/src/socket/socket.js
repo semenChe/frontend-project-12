@@ -4,9 +4,7 @@ import store, { actions } from '../slices/index.js';
 
 const {
   addMessage,
-  removeMessage,
   addChannel,
-  setActualChannel,
   deleteChannel,
   channelRename,
 } = actions;
@@ -25,32 +23,43 @@ socket.on('renameChannel', (payload) => {
   dispacth(channelRename(payload));
 });
 
-const socketApi = {
-  sendMessage: (...args) => socket.emit('newMessage', ...args),
+const chatApi = {
+  sendMessage: (message, cb) => {
+    socket.emit('newMessage', message, ({ status }) => {
+      if (status === 'ok') {
+        cb(null);
+        return;
+      }
+      cb(status);
+    });
+  },
   newChannel: (name, cb) => {
-    socket.emit('newChannel', { name }, (response) => {
-      const {
-        status,
-        data: { id },
-      } = response;
-
+    socket.emit('newChannel', { name }, ({ status }) => {
       if (status === 'ok') {
-        dispacth(setActualChannel(id));
-        cb();
-        return response.data;
+        cb(null);
+        return;
       }
-      return status;
+      cb(status);
     });
   },
-  removeChannel: (id) => {
-    socket.emit('removeChannel', { id }, (response) => {
-      const { status } = response;
+  removeChannel: (id, cb) => {
+    socket.emit('removeChannel', { id }, ({ status }) => {
       if (status === 'ok') {
-        dispacth(removeMessage(id));
+        cb(null);
+        return;
       }
+      cb(status);
     });
   },
-  renameChannel: ({ name, id }) => socket.emit('renameChannel', { name, id }),
+  renameChannel: ({ name, id }, cb) => {
+    socket.emit('renameChannel', { name, id }, ({ status }) => {
+      if (status === 'ok') {
+        cb(null);
+        return;
+      }
+      cb(status);
+    });
+  },
 };
 
-export default socketApi;
+export default chatApi;

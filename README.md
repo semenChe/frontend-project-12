@@ -2,7 +2,7 @@
 [![Actions Status](https://github.com/semenChe/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/semenChe/frontend-project-12/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/8dfa8c48464bd1a0a11e/maintainability)](https://codeclimate.com/github/semenChe/frontend-project-12/maintainability)
 
-[Hexlet Chat](https://frontend-project-12-production-62d8.up.railway.app/) – аналог Slack-чата (очень упрощенная версия)
+[Hexlet Chat](https://frontend-project-12-production-10a9.up.railway.app/login) – аналог Slack-чата (очень упрощенная версия)
 
 ### описания по запуску
 Перейдите по [ссылке](https://frontend-project-12-production-62d8.up.railway.app/)

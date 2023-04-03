@@ -7,22 +7,17 @@ import Message from './Message.jsx';
 
 const MessagesComponent = () => {
   const channels = useSelector((s) => s.channelsInfo.channels);
-
   const messages = useSelector((s) => s.messagesInfo.messages);
-
   const currentChannelId = useSelector(
     (state) => state.channelsInfo.currentChannelId,
   );
-
   const [activeChannel] = channels.filter(
     ({ id }) => id === currentChannelId,
   );
   const activeChannelMessages = messages.filter(
     (message) => message.channelId === currentChannelId,
   );
-
   const messagesView = useRef(null);
-
   useEffect(() => {
     messagesView.current?.lastElementChild?.scrollIntoView({ behavior: 'smooth' });
   }, [activeChannelMessages]);

@@ -6,18 +6,25 @@ import leoProfanity from 'leo-profanity';
 import * as yup from 'yup';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
-import { useAuth, useSocketApi } from '../../../hooks/hooks.js';
+import { useAuth, useChatApi } from '../../../hooks/hooks.js';
 
 const MessageForm = ({ activeChannel }) => {
   const { user } = useAuth();
-  const socketApi = useSocketApi();
+  const chatApi = useChatApi();
   const messageRef = useRef(null);
   const { t } = useTranslation();
 
   const validationSchema = yup.object().shape({
     message: yup.string().trim().required('Required'),
   });
+
+  const callback = (error) => {
+    if (error) {
+      toast.error(t('toast.dataLoadingError'));
+    }
+  };
 
   useEffect(() => {
     messageRef.current.focus();
@@ -33,12 +40,8 @@ const MessageForm = ({ activeChannel }) => {
         channelId: activeChannel.id,
         username: user.username,
       };
-      try {
-        await socketApi.sendMessage(message);
-        values.body = '';
-      } catch (e) {
-        console.error(e.message);
-      }
+      await chatApi.sendMessage(message, callback);
+      values.body = '';
     },
     validateOnChange: validationSchema,
   });

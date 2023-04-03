@@ -22,9 +22,9 @@ const ChatPage = () => {
     const fetchUserData = async () => {
       dispatch(fetchData(auth.getAuthHeader()))
         .unwrap()
-        .catch(({ status }) => {
+        .catch(() => {
           notify();
-          console.error(status);
+          auth.logOut();
         });
     };
     fetchUserData();

@@ -13,6 +13,7 @@ const slice = createSlice({
     },
     addChannel(state, { payload }) {
       state.channels.push(payload);
+      state.currentChannelId = payload.id;
     },
     deleteChannel(state, { payload }) {
       state.channels = state.channels.filter(

@@ -16,7 +16,6 @@ const LoginPage = () => {
   const { t } = useTranslation();
   const auth = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
-  const [submited, setSubmited] = useState(false);
   const inputRef = useRef();
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,7 +39,6 @@ const LoginPage = () => {
 
     onSubmit: async (values) => {
       setAuthFailed(false);
-      setSubmited(true);
       try {
         const res = await axios.post(getRoutes.loginPath(), values);
         localStorage.setItem('userId', JSON.stringify(res.data));
@@ -56,7 +54,6 @@ const LoginPage = () => {
         }
         throw err;
       }
-      setSubmited(false);
     },
   });
 
@@ -83,7 +80,7 @@ const LoginPage = () => {
                         onChange={formik.handleChange}
                         value={formik.values.username}
                         onBlur={formik.handleBlur}
-                        disabled={submited}
+                        disabled={formik.isSubmitting}
                         placeholder="username"
                         name="username"
                         id="username"
@@ -101,7 +98,7 @@ const LoginPage = () => {
                         onChange={formik.handleChange}
                         value={formik.values.password}
                         onBlur={formik.handleBlur}
-                        disabled={submited}
+                        disabled={formik.isSubmitting}
                         placeholder="password"
                         name="password"
                         id="password"
@@ -112,7 +109,7 @@ const LoginPage = () => {
                     </FloatingLabel>
                     <Form.Control.Feedback type="invalid" className="invalid-feedback">{t('noValidUsername')}</Form.Control.Feedback>
                   </Form.Group>
-                  <Button type="submit" disabled={submited} variant="outline-primary" className="w-100 mb-3">{t('enter')}</Button>
+                  <Button type="submit" disabled={formik.isSubmitting} variant="outline-primary" className="w-100 mb-3">{t('enter')}</Button>
                 </fieldset>
               </Form>
             </Card.Body>

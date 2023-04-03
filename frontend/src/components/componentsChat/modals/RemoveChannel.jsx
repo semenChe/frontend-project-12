@@ -4,17 +4,21 @@ import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { useSocketApi } from '../../../hooks/hooks.js';
+import { useChatApi } from '../../../hooks/hooks.js';
 
 const Remove = ({ closeHandler, changed }) => {
   const { t } = useTranslation();
-  const notify = () => toast.warn(t('toast.removeChannel'));
-  const sockedApi = useSocketApi();
-  const deleteChannel = (e) => {
-    e.preventDefault();
-    sockedApi.removeChannel(changed);
-    notify();
+  const callback = (error) => {
+    if (error) {
+      toast.error(t('toast.dataLoadingError'));
+    }
     closeHandler();
+    toast.warn(t('toast.removeChannel'));
+  };
+  const chatApi = useChatApi();
+  const deleteChannel = async (e) => {
+    e.preventDefault();
+    await chatApi.removeChannel(changed, callback);
   };
   return (
     <>

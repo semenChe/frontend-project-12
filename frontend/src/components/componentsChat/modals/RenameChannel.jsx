@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import leoProfanity from 'leo-profanity';
 import { toast } from 'react-toastify';
 
-import { useSocketApi } from '../../../hooks/hooks.js';
+import { useChatApi } from '../../../hooks/hooks.js';
 
 const validationChannelsSchema = (channels, text) => yup.object().shape({
   name: yup
@@ -23,7 +23,6 @@ const validationChannelsSchema = (channels, text) => yup.object().shape({
 
 const Rename = ({ closeHandler, changed }) => {
   const { t } = useTranslation();
-  const notify = () => toast.info(t('toast.renamedChannel'));
   const refContainer = useRef('');
   useEffect(() => {
     setTimeout(() => {
@@ -31,7 +30,15 @@ const Rename = ({ closeHandler, changed }) => {
     }, 1);
   }, []);
 
-  const socketApi = useSocketApi();
+  const callback = (error) => {
+    if (error) {
+      toast.error(t('toast.dataLoadingError'));
+    }
+    closeHandler();
+    toast.info(t('toast.renamedChannel'));
+  };
+
+  const chatApi = useChatApi();
 
   const allChannels = useSelector((state) => state.channelsInfo.channels);
   const channelsName = allChannels.map((channel) => channel.name);
@@ -42,16 +49,10 @@ const Rename = ({ closeHandler, changed }) => {
       name: channel.name,
     },
     validationSchema: validationChannelsSchema(channelsName, t),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const { name } = values;
       const cleanedName = leoProfanity.clean(name);
-      try {
-        socketApi.renameChannel({ name: cleanedName, id: changed });
-        notify();
-        closeHandler();
-      } catch (e) {
-        console.error(e.message);
-      }
+      await chatApi.renameChannel({ name: cleanedName, id: changed }, callback);
     },
   });
   return (

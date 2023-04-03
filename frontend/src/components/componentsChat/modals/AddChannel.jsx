@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { useSocketApi } from '../../../hooks/hooks.js';
+import { useChatApi } from '../../../hooks/hooks.js';
 
 const validationChannelsSchema = (channels, text) => yup.object().shape({
   name: yup
@@ -25,7 +25,7 @@ const validationChannelsSchema = (channels, text) => yup.object().shape({
 const Add = ({ closeHandler }) => {
   const { t } = useTranslation();
   const allChannels = useSelector((state) => state.channelsInfo.channels);
-  const socketApi = useSocketApi();
+  const chatApi = useChatApi();
   const channelsName = allChannels.map((channel) => channel.name);
 
   const refContainer = useRef('');
@@ -34,11 +34,12 @@ const Add = ({ closeHandler }) => {
     refContainer.current.focus();
   }, []);
 
-  const notify = () => toast.success(t('toast.createChannel'));
-
-  const close = () => {
+  const callback = (error) => {
+    if (error) {
+      toast.error(t('toast.dataLoadingError'));
+    }
     closeHandler();
-    notify();
+    toast.success(t('toast.createChannel'));
   };
 
   const formik = useFormik({
@@ -46,15 +47,11 @@ const Add = ({ closeHandler }) => {
       name: '',
     },
     validationSchema: validationChannelsSchema(channelsName, t),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const { name } = values;
       const cleanedName = leoProfanity.clean(name);
-      try {
-        socketApi.newChannel(cleanedName, close);
-        values.name = '';
-      } catch (e) {
-        console.error(e.message);
-      }
+      await chatApi.newChannel(cleanedName, callback);
+      values.name = '';
     },
   });
 

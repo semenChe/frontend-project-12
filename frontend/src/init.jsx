@@ -9,7 +9,7 @@ import { chatApiContext } from './context/contex.js';
 import App from './components/App.jsx';
 import resources from './locales/index.js';
 import store from './slices/index.js';
-import socketApi from './socket/socket.js';
+import chatApi from './socket/socket.js';
 import rollbarConfig from './rollbar/rollbarConfig.js';
 
 const Init = async () => {
@@ -30,7 +30,7 @@ const Init = async () => {
         <ErrorBoundary>
           <AuthProvider>
             <I18nextProvider i18n={i18n}>
-              <chatApiContext.Provider value={socketApi}>
+              <chatApiContext.Provider value={chatApi}>
                 <App />
               </chatApiContext.Provider>
             </I18nextProvider>
