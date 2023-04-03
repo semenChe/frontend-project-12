@@ -17,13 +17,11 @@ const ChatPage = () => {
   const channelsInfo = useSelector((s) => s.channelsInfo);
 
   useEffect(() => {
-    const notify = () => toast.error(t('toast.dataLoadingError'));
-
     const fetchUserData = async () => {
       dispatch(fetchData(auth.getAuthHeader()))
         .unwrap()
         .catch(() => {
-          notify();
+          toast.error(t('toast.аuthorisationError'));
           auth.logOut();
         });
     };

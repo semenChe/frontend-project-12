@@ -16,6 +16,7 @@ const ruLocales = {
       removeChannel: 'Канал удалён',
       renamedChannel: 'Канал переименован',
       dataLoadingError: 'Ошибка загрузки данных',
+      аuthorisationError: 'Ошибка авторизации',
     },
     required: 'Обязательное поле',
     min: 'От 3 до 20 символов',
