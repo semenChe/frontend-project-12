@@ -17,7 +17,7 @@ socket.on('newChannel', (payload) => {
   dispacth(addChannel(payload));
 });
 socket.on('removeChannel', (payload) => {
-  dispacth(deleteChannel(payload.id));
+  dispacth(deleteChannel(payload));
 });
 socket.on('renameChannel', (payload) => {
   dispacth(channelRename(payload));

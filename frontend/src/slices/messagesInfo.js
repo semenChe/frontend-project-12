@@ -21,7 +21,7 @@ const slice = createSlice({
       })
       .addCase(deleteChannel, (state, { payload }) => {
         state.messages = state.messages.filter(
-          (message) => message.channelId !== payload,
+          (message) => message.channelId !== payload.id,
         );
       });
   },

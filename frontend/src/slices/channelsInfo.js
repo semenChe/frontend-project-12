@@ -17,7 +17,7 @@ const slice = createSlice({
     },
     deleteChannel(state, { payload }) {
       state.channels = state.channels.filter(
-        (channel) => channel.id !== payload,
+        (channel) => channel.id !== payload.id,
       );
       if (state.currentChannelId === payload) {
         state.currentChannelId = defaultCurrentChannelId;
