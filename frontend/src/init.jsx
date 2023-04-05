@@ -24,24 +24,18 @@ const Init = async () => {
   const ruDict = leoProfanity.getDictionary('ru');
   leoProfanity.add(ruDict);
 
-  function TestError() {
-    const a = null;
-    return a.hello();
-  }
-
   return (
     <Provider store={store}>
       <RollbarProvider config={rollbarConfig}>
         <ErrorBoundary>
-          <TestError />
+          <AuthProvider>
+            <I18nextProvider i18n={i18n}>
+              <chatApiContext.Provider value={chatApi}>
+                <App />
+              </chatApiContext.Provider>
+            </I18nextProvider>
+          </AuthProvider>
         </ErrorBoundary>
-        <AuthProvider>
-          <I18nextProvider i18n={i18n}>
-            <chatApiContext.Provider value={chatApi}>
-              <App />
-            </chatApiContext.Provider>
-          </I18nextProvider>
-        </AuthProvider>
       </RollbarProvider>
     </Provider>
   );
