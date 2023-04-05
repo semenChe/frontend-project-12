@@ -7,20 +7,21 @@ const {
   addChannel,
   deleteChannel,
   channelRename,
+  // setNewChannelId,
 } = actions;
-const dispacth = store.dispatch;
+const { dispatch } = store;
 const socket = io();
 socket.on('newMessage', (payload) => {
-  dispacth(addMessage(payload));
+  dispatch(addMessage(payload));
 });
 socket.on('newChannel', (payload) => {
-  dispacth(addChannel(payload));
+  dispatch(addChannel(payload));
 });
 socket.on('removeChannel', (payload) => {
-  dispacth(deleteChannel(payload));
+  dispatch(deleteChannel(payload));
 });
 socket.on('renameChannel', (payload) => {
-  dispacth(channelRename(payload));
+  dispatch(channelRename(payload));
 });
 
 const chatApi = {
@@ -33,15 +34,26 @@ const chatApi = {
       cb(status);
     });
   },
-  newChannel: (name, cb) => {
-    socket.emit('newChannel', { name }, ({ status }) => {
-      if (status === 'ok') {
-        cb(null);
-        return;
+  // newChannel: (name, cb) => {
+  //   socket.emit('newChannel', { name }, (res) => {
+  //     if (status === 'ok') {
+  //       cb(null, res);
+  //       return;
+  //     }
+  //     cb(status);
+  //   });
+  // },
+  newChannel: (name, cb) => new Promise((resolve, reject) => {
+    socket.emit('newChannel', { name }, (response) => {
+      if (response.error) {
+        console.error(response.error);
+        reject(response.error);
+      } else {
+        resolve(response.data.id);
       }
-      cb(status);
+      cb(response.error);
     });
-  },
+  }),
   removeChannel: (id, cb) => {
     socket.emit('removeChannel', { id }, ({ status }) => {
       if (status === 'ok') {

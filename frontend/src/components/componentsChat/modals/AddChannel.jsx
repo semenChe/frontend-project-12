@@ -26,12 +26,12 @@ const validationChannelsSchema = (channels, text) => yup.object().shape({
 const Add = ({ closeHandler }) => {
   const { t } = useTranslation();
   const channelsInfo = useSelector((state) => state.channelsInfo);
-  const { newChanneId, channels } = channelsInfo;
+  const { newChannelId, channels } = channelsInfo;
   const chatApi = useChatApi();
   const channelsName = channels.map((channel) => channel.name);
 
   const refContainer = useRef('');
-  const { setActualChannel } = actions;
+  const { setActualChannel, setNewChannelId } = actions;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,11 +51,12 @@ const Add = ({ closeHandler }) => {
       name: '',
     },
     validationSchema: validationChannelsSchema(channelsName, t),
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       const { name } = values;
       const cleanedName = leoProfanity.clean(name);
-      await chatApi.newChannel(cleanedName, callback);
-      dispatch(setActualChannel(newChanneId));
+      const promise = chatApi.newChannel(cleanedName, callback);
+      promise.then((id) => dispatch(setActualChannel(id)));
+      // dispatch(setActualChannel(newChannelId));
       values.name = '';
     },
   });

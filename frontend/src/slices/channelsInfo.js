@@ -7,18 +7,20 @@ const defaultCurrentChannelId = 1;
 const slice = createSlice({
   name: 'channelsInfo',
   initialState: {
-    loading: false,
-    channels: [],
-    currentChannelId: defaultCurrentChannelId,
-    newChanneId: null,
+    loading: false, channels: [], currentChannelId: defaultCurrentChannelId, newChannelId: null,
   },
   reducers: {
     setActualChannel(state, { payload }) {
+      console.log('2payload==>', payload);
       state.currentChannelId = payload;
     },
+    setNewChannelId(state, { payload }) {
+      state.newChannelId = payload.id;
+    },
     addChannel(state, { payload }) {
+      state.newChannelId = payload.id;
       state.channels.push(payload);
-      state.newChanneId = payload.id;
+      console.log('state.newChannelId ===>', payload.id);
     },
     deleteChannel(state, { payload }) {
       state.channels = state.channels.filter(

@@ -25,19 +25,19 @@ const Init = async () => {
   leoProfanity.add(ruDict);
 
   return (
-    <Provider store={store}>
-      <RollbarProvider config={rollbarConfig}>
-        <ErrorBoundary>
-          <AuthProvider>
-            <I18nextProvider i18n={i18n}>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <I18nextProvider i18n={i18n}>
+          <Provider store={store}>
+            <AuthProvider>
               <chatApiContext.Provider value={chatApi}>
                 <App />
               </chatApiContext.Provider>
-            </I18nextProvider>
-          </AuthProvider>
-        </ErrorBoundary>
-      </RollbarProvider>
-    </Provider>
+            </AuthProvider>
+          </Provider>
+        </I18nextProvider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };
 
