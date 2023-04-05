@@ -15,6 +15,11 @@ const AuthButton = () => {
   );
 };
 
+const TestErr = () => {
+  const a = null;
+  return a.helper;
+};
+
 const Header = () => {
   const { t } = useTranslation();
   return (
@@ -22,6 +27,7 @@ const Header = () => {
       <Container>
         <Navbar.Brand as={Link} to={getRoutes.chatPagePath()}>{t('chatLogo')}</Navbar.Brand>
         <AuthButton />
+        <TestErr />
       </Container>
     </Navbar>
   );
