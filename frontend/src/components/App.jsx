@@ -11,6 +11,11 @@ import getRoutes from '../routes.js';
 import Header from './Header.jsx';
 import PrivateRoute from './PrivatePage.jsx';
 
+function TestError() {
+  const a = null;
+  return a.hello();
+}
+
 const App = () => (
   <div className="h-100">
     <div className="d-flex flex-column h-100">
@@ -28,6 +33,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      <TestError />
     </div>
     <ToastContainer
       position="top-right"
