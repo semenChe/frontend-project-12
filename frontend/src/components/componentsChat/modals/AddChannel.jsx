@@ -6,11 +6,12 @@ import {
   Modal, FormGroup, FormControl, FormLabel, Button, Form,
 } from 'react-bootstrap';
 import * as yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { useChatApi } from '../../../hooks/hooks.js';
+import { actions } from '../../../slices/index.js';
 
 const validationChannelsSchema = (channels, text) => yup.object().shape({
   name: yup
@@ -24,11 +25,14 @@ const validationChannelsSchema = (channels, text) => yup.object().shape({
 
 const Add = ({ closeHandler }) => {
   const { t } = useTranslation();
-  const allChannels = useSelector((state) => state.channelsInfo.channels);
+  const channelsInfo = useSelector((state) => state.channelsInfo);
+  const { prevChannelId, channels } = channelsInfo;
   const chatApi = useChatApi();
-  const channelsName = allChannels.map((channel) => channel.name);
+  const channelsName = channels.map((channel) => channel.name);
 
   const refContainer = useRef('');
+  const { setActualChannel } = actions;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     refContainer.current.focus();
@@ -51,6 +55,7 @@ const Add = ({ closeHandler }) => {
       const { name } = values;
       const cleanedName = leoProfanity.clean(name);
       await chatApi.newChannel(cleanedName, callback);
+      dispatch(setActualChannel(prevChannelId));
       values.name = '';
     },
   });
