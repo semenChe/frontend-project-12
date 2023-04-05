@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import leoProfanity from 'leo-profanity';
@@ -25,39 +24,35 @@ const validationChannelsSchema = (channels, text) => yup.object().shape({
 
 const Add = ({ closeHandler }) => {
   const { t } = useTranslation();
-  const channelsInfo = useSelector((state) => state.channelsInfo);
-  const { newChannelId, channels } = channelsInfo;
+  const channels = useSelector((state) => state.channelsInfo.channels);
   const chatApi = useChatApi();
   const channelsName = channels.map((channel) => channel.name);
 
   const refContainer = useRef('');
-  const { setActualChannel, setNewChannelId } = actions;
+  const { setActualChannel } = actions;
   const dispatch = useDispatch();
 
   useEffect(() => {
     refContainer.current.focus();
   }, []);
 
-  const callback = (error) => {
-    if (error) {
-      toast.error(t('toast.dataLoadingError'));
-    }
-    closeHandler();
-    toast.success(t('toast.createChannel'));
-  };
-
   const formik = useFormik({
     initialValues: {
       name: '',
     },
     validationSchema: validationChannelsSchema(channelsName, t),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const { name } = values;
       const cleanedName = leoProfanity.clean(name);
-      const promise = chatApi.newChannel(cleanedName, callback);
-      promise.then((id) => dispatch(setActualChannel(id)));
-      // dispatch(setActualChannel(newChannelId));
-      values.name = '';
+      await chatApi.newChannel(cleanedName)
+        .then((id) => {
+          dispatch(setActualChannel(id));
+          closeHandler();
+          toast.success(t('toast.createChannel'));
+        })
+        .catch(() => {
+          toast.error(t('toast.dataLoadingError'));
+        });
     },
   });
 

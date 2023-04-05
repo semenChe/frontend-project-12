@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import React, { useRef, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
@@ -20,12 +19,6 @@ const MessageForm = ({ activeChannel }) => {
     message: yup.string().trim().required('Required'),
   });
 
-  const callback = (error) => {
-    if (error) {
-      toast.error(t('toast.dataLoadingError'));
-    }
-  };
-
   useEffect(() => {
     messageRef.current.focus();
   }, []);
@@ -40,8 +33,13 @@ const MessageForm = ({ activeChannel }) => {
         channelId: activeChannel.id,
         username: user.username,
       };
-      await chatApi.sendMessage(message, callback);
-      values.body = '';
+      await chatApi.sendMessage(message)
+        .then(() => {
+          formik.resetForm();
+        })
+        .catch(() => {
+          toast.error(t('toast.dataLoadingError'));
+        });
     },
     validateOnChange: validationSchema,
   });

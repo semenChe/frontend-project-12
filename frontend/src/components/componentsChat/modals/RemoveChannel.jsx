@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -8,17 +7,17 @@ import { useChatApi } from '../../../hooks/hooks.js';
 
 const Remove = ({ closeHandler, changed }) => {
   const { t } = useTranslation();
-  const callback = (error) => {
-    if (error) {
-      toast.error(t('toast.dataLoadingError'));
-    }
-    closeHandler();
-    toast.warn(t('toast.removeChannel'));
-  };
   const chatApi = useChatApi();
   const deleteChannel = async (e) => {
     e.preventDefault();
-    await chatApi.removeChannel(changed, callback);
+    await chatApi.removeChannel(changed)
+      .then(() => {
+        closeHandler();
+        toast.warn(t('toast.removeChannel'));
+      })
+      .catch(() => {
+        toast.error(t('toast.dataLoadingError'));
+      });
   };
   return (
     <>

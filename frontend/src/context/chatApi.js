@@ -7,7 +7,6 @@ const {
   addChannel,
   deleteChannel,
   channelRename,
-  // setNewChannelId,
 } = actions;
 const { dispatch } = store;
 const socket = io();
@@ -25,53 +24,46 @@ socket.on('renameChannel', (payload) => {
 });
 
 const chatApi = {
-  sendMessage: (message, cb) => {
-    socket.emit('newMessage', message, ({ status }) => {
-      if (status === 'ok') {
-        cb(null);
-        return;
+  sendMessage: (message) => new Promise((resolve, reject) => {
+    socket.emit('newMessage', message, (response) => {
+      if (response.error) {
+        console.error(response.error);
+        reject();
+      } else {
+        resolve();
       }
-      cb(status);
     });
-  },
-  // newChannel: (name, cb) => {
-  //   socket.emit('newChannel', { name }, (res) => {
-  //     if (status === 'ok') {
-  //       cb(null, res);
-  //       return;
-  //     }
-  //     cb(status);
-  //   });
-  // },
-  newChannel: (name, cb) => new Promise((resolve, reject) => {
+  }),
+  newChannel: (name) => new Promise((resolve, reject) => {
     socket.emit('newChannel', { name }, (response) => {
       if (response.error) {
         console.error(response.error);
-        reject(response.error);
+        reject();
       } else {
         resolve(response.data.id);
       }
-      cb(response.error);
     });
   }),
-  removeChannel: (id, cb) => {
-    socket.emit('removeChannel', { id }, ({ status }) => {
-      if (status === 'ok') {
-        cb(null);
-        return;
+  removeChannel: (id) => new Promise((resolve, reject) => {
+    socket.emit('removeChannel', { id }, (response) => {
+      if (response.error) {
+        console.error(response.error);
+        reject();
+      } else {
+        resolve();
       }
-      cb(status);
     });
-  },
-  renameChannel: ({ name, id }, cb) => {
-    socket.emit('renameChannel', { name, id }, ({ status }) => {
-      if (status === 'ok') {
-        cb(null);
-        return;
+  }),
+  renameChannel: ({ name, id }) => new Promise((resolve, reject) => {
+    socket.emit('renameChannel', { name, id }, (response) => {
+      if (response.error) {
+        console.error(response.error);
+        reject();
+      } else {
+        resolve();
       }
-      cb(status);
     });
-  },
+  }),
 };
 
 export default chatApi;

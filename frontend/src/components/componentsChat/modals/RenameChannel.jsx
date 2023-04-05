@@ -29,15 +29,6 @@ const Rename = ({ closeHandler, changed }) => {
       refContainer.current.select();
     }, 1);
   }, []);
-
-  const callback = (error) => {
-    if (error) {
-      toast.error(t('toast.dataLoadingError'));
-    }
-    closeHandler();
-    toast.info(t('toast.renamedChannel'));
-  };
-
   const chatApi = useChatApi();
 
   const allChannels = useSelector((state) => state.channelsInfo.channels);
@@ -52,7 +43,14 @@ const Rename = ({ closeHandler, changed }) => {
     onSubmit: async (values) => {
       const { name } = values;
       const cleanedName = leoProfanity.clean(name);
-      await chatApi.renameChannel({ name: cleanedName, id: changed }, callback);
+      await chatApi.renameChannel({ name: cleanedName, id: changed })
+        .then(() => {
+          closeHandler();
+          toast.info(t('toast.renamedChannel'));
+        })
+        .catch(() => {
+          toast.error(t('toast.dataLoadingError'));
+        });
     },
   });
   return (

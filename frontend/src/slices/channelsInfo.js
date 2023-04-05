@@ -6,21 +6,14 @@ import fetchData from '../requests/fetchData.js';
 const defaultCurrentChannelId = 1;
 const slice = createSlice({
   name: 'channelsInfo',
-  initialState: {
-    loading: false, channels: [], currentChannelId: defaultCurrentChannelId, newChannelId: null,
-  },
+  initialState: { loading: false, channels: [], currentChannelId: defaultCurrentChannelId },
   reducers: {
     setActualChannel(state, { payload }) {
-      console.log('2payload==>', payload);
       state.currentChannelId = payload;
-    },
-    setNewChannelId(state, { payload }) {
-      state.newChannelId = payload.id;
     },
     addChannel(state, { payload }) {
       state.newChannelId = payload.id;
       state.channels.push(payload);
-      console.log('state.newChannelId ===>', payload.id);
     },
     deleteChannel(state, { payload }) {
       state.channels = state.channels.filter(
