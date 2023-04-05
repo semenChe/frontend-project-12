@@ -26,7 +26,7 @@ const validationChannelsSchema = (channels, text) => yup.object().shape({
 const Add = ({ closeHandler }) => {
   const { t } = useTranslation();
   const channelsInfo = useSelector((state) => state.channelsInfo);
-  const { prevChannelId, channels } = channelsInfo;
+  const { newChanneId, channels } = channelsInfo;
   const chatApi = useChatApi();
   const channelsName = channels.map((channel) => channel.name);
 
@@ -55,7 +55,7 @@ const Add = ({ closeHandler }) => {
       const { name } = values;
       const cleanedName = leoProfanity.clean(name);
       await chatApi.newChannel(cleanedName, callback);
-      dispatch(setActualChannel(prevChannelId));
+      dispatch(setActualChannel(newChanneId));
       values.name = '';
     },
   });
