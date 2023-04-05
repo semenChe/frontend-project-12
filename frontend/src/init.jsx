@@ -5,11 +5,11 @@ import leoProfanity from 'leo-profanity';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 import AuthProvider from './context/AuthProvider.jsx';
-import { chatApiContext } from './context/contex.js';
+import { chatApiContext } from './context/context.js';
 import App from './components/App.jsx';
 import resources from './locales/index.js';
 import store from './slices/index.js';
-import chatApi from './socket/socket.js';
+import chatApi from './context/chatApi.js';
 import rollbarConfig from './rollbar/rollbarConfig.js';
 
 const Init = async () => {

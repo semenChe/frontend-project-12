@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { AuthContext } from './contex.js';
+import { AuthContext } from './context.js';
 
 const AuthProvider = ({ children }) => {
   const savedUserData = JSON.parse(localStorage.getItem('userId'));
