@@ -20,9 +20,9 @@ const ChatPage = () => {
     const fetchUserData = async () => {
       dispatch(fetchData(auth.getAuthHeader()))
         .unwrap()
-        .catch(() => {
+        .catch((e) => {
           toast.error(t('toast.аuthorisationError'));
-          auth.logOut();
+          console.error(e);
         });
     };
     fetchUserData();
